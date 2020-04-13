@@ -251,7 +251,8 @@ public class EmbedCreator {
      * @return the resulting Message
      */
     public Message build() {
-        messageBuilder.append(content);
+        if (content != null)
+            messageBuilder.append(content);
         messageBuilder.setEmbed(embed.build());
         return messageBuilder.build();
     }
