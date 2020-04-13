@@ -7,6 +7,8 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.awt.*;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class WarnCommand implements Command {
@@ -32,6 +34,23 @@ public class WarnCommand implements Command {
             event.getChannel().sendMessage(new EmbedCreator(Color.RED).setDescription("Du hast keine Berechtigung, um diesen Befehl auszuführen").build()).complete().delete().queueAfter(3, TimeUnit.SECONDS);
             return;
         }
+
+        Member target = null;
+        List<Member> mentioned = event.getMessage().getMentionedMembers();
+        if (mentioned.isEmpty()) {
+            try {
+                target = event.getGuild().getMemberById(args[0]);
+                if (target == null) {
+                    event.getChannel().sendMessage(new EmbedCreator("Diese ID nicht vorhanden!", Color.RED).build()).complete().delete().queueAfter(3, TimeUnit.SECONDS);
+                    return;
+                }
+            } catch (Exception ex) {
+            }
+        } else
+            target = mentioned.get(0);
+
+        String reason = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
+
 
     }
 }
