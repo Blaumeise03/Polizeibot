@@ -31,8 +31,13 @@ public class WarnCommand implements Command {
 
         Member member = event.getMember();
 
-        if (args.length < 2) {
+        if (!member.getRoles().contains(event.getGuild().getRolesByName("Polizei", true))) {
             event.getChannel().sendMessage(new EmbedCreator(Color.RED).setDescription("Du hast keine Berechtigung, um diesen Befehl auszuführen").build()).complete().delete().queueAfter(3, TimeUnit.SECONDS);
+            return;
+        }
+
+        if (args.length < 2) {
+            event.getChannel().sendMessage(new EmbedCreator(Color.RED).setDescription("Fehlende Argumente: <@Nutzer | Nutzer-ID> <Grund>").build()).complete().delete().queueAfter(3, TimeUnit.SECONDS);
             return;
         }
 
