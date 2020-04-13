@@ -3,6 +3,7 @@ package de.demokratie.polizeibot.commands;
 import de.demokratie.polizeibot.Bot;
 import de.demokratie.polizeibot.command.Command;
 import de.demokratie.polizeibot.embed.EmbedCreator;
+import de.demokratie.polizeibot.utils.Utils;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
@@ -52,7 +53,7 @@ public class WarnCommand implements Command {
             target = mentioned.get(0);
 
         String reason = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
-        target.getUser().openPrivateChannel().complete().sendMessage("Verwarnung: " + reason).queue();
+        Utils.warn(target, reason);
 
     }
 }

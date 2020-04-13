@@ -1,7 +1,6 @@
 package de.demokratie.polizeibot.utils;
 
 import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.bukkit.configuration.file.YamlConfiguration;
 
