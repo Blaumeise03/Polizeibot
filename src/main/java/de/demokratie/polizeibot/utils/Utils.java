@@ -11,12 +11,15 @@ public class Utils {
 
     public static void warn(Member m, String reason) {
         try {
-            File f = new File("users/" + m.getId() + "/");
+            File users = new File("users/");
+            if (!users.exists())
+                users.mkdirs();
+            File f = new File("users/" + m.getId() + ".yml");
             if (!f.exists()) {
                 f.createNewFile();
             }
             YamlConfiguration c = YamlConfiguration.loadConfiguration(f);
-            if(c.contains(m.getId())) {
+            if (c.contains(m.getId())) {
                 int warns = c.getInt(m.getId() + ".warns");
                 c.set(m.getId() + ".warns", warns + 1);
             }
