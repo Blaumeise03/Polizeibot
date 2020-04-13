@@ -12,7 +12,7 @@ public class Utils {
     public static void warn(Member m, String reason) {
         try {
             File f = new File("users/" + m.getId() + "/");
-            if(f.exists()) {
+            if (!f.exists()) {
                 f.createNewFile();
             }
             YamlConfiguration c = YamlConfiguration.loadConfiguration(f);
