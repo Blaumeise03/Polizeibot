@@ -38,7 +38,7 @@ public class Bot {
 
         try {
             jda = new JDABuilder(AccountType.BOT)
-                    .setToken("<TOKEN>")
+                    .setToken("Njk5MjQyNjk5MDk3ODk5MTE4.XpRitQ.rrEmpeJ7Xufe0bTt9jvwRLiqNEs")
                     .setAutoReconnect(true)
                     .build().awaitReady();
         } catch (Exception ex) {
