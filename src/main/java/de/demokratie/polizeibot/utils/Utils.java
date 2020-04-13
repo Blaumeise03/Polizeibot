@@ -8,6 +8,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -30,6 +31,7 @@ public class Utils {
             c.set("reasons", reasons);
             c.set(reason + ".warner", warner.getId());
             c.set(reason + ".date", System.currentTimeMillis());
+            c.save(f);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -49,36 +51,159 @@ public class Utils {
             }
             YamlConfiguration c = YamlConfiguration.loadConfiguration(f);
 
-            if(!c.getBoolean("muted")) {
-                c.set("muted", true);
-            }
+            c.set("muted", true);
             c.set("reason", reason);
             c.set("type", "GENERAL");
             c.set("date", System.currentTimeMillis());
             c.set("warner", e.getMember().getId());
+            c.set("permanent", true);
+            c.save(f);
         } catch(IOException exc) {
             exc.printStackTrace();
         }
-
     }
 
     public static void voiceMute(GuildMessageReceivedEvent e, Member m, String reason) {
+        try {
+            e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Voicemute", true).get(0));
+            File d = new File("users/" + m.getId());
+            File f = new File("users/" + m.getId() + "/mutes.yml");
+            if(!d.exists()) {
+                d.mkdir();
+            }
+            if (!f.exists()) {
+                f.createNewFile();
+            }
+            YamlConfiguration c = YamlConfiguration.loadConfiguration(f);
 
+            c.set("muted", true);
+            c.set("reason", reason);
+            c.set("type", "VOICE");
+            c.set("date", System.currentTimeMillis());
+            c.set("warner", e.getMember().getId());
+            c.set("permanent", true);
+            c.save(f);
+        } catch(IOException exc) {
+            exc.printStackTrace();
+        }
     }
 
     public static void chatMute(GuildMessageReceivedEvent e, Member m, String reason) {
+        try {
+            e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Chatmute", true).get(0));
+            File d = new File("users/" + m.getId());
+            File f = new File("users/" + m.getId() + "/mutes.yml");
+            if(!d.exists()) {
+                d.mkdir();
+            }
+            if (!f.exists()) {
+                f.createNewFile();
+            }
+            YamlConfiguration c = YamlConfiguration.loadConfiguration(f);
 
+            c.set("muted", true);
+            c.set("reason", reason);
+            c.set("type", "CHAT");
+            c.set("date", System.currentTimeMillis());
+            c.set("warner", e.getMember().getId());
+            c.set("permanent", true);
+            c.save(f);
+        } catch(IOException exc) {
+            exc.printStackTrace();
+        }
     }
 
     public static void tempMute(GuildMessageReceivedEvent e, Member m, String reason, int days) {
+        try {
+            e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Mute", true).get(0));
+            File d = new File("users/" + m.getId());
+            File f = new File("users/" + m.getId() + "/mutes.yml");
+            if(!d.exists()) {
+                d.mkdir();
+            }
+            if (!f.exists()) {
+                f.createNewFile();
+            }
+            YamlConfiguration c = YamlConfiguration.loadConfiguration(f);
+
+            c.set("muted", true);
+            c.set("reason", reason);
+            c.set("type", "GENERAL");
+            c.set("date", System.currentTimeMillis());
+            c.set("warner", e.getMember().getId());
+            c.set("permanent", false);
+            Date expireDate = new Date();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(expireDate);
+            calendar.add(Calendar.DATE, days);
+            expireDate = calendar.getTime();
+            c.set("expireDate", expireDate.getTime());
+            c.save(f);
+        } catch(IOException exc) {
+            exc.printStackTrace();
+        }
     }
 
-    public static void tempVoiceMute(GuildMessageReceivedEvent e, Member m, String reason) {
+    public static void tempVoiceMute(GuildMessageReceivedEvent e, Member m, String reason, int days) {
+        try {
+            e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Mute", true).get(0));
+            File d = new File("users/" + m.getId());
+            File f = new File("users/" + m.getId() + "/mutes.yml");
+            if(!d.exists()) {
+                d.mkdir();
+            }
+            if (!f.exists()) {
+                f.createNewFile();
+            }
+            YamlConfiguration c = YamlConfiguration.loadConfiguration(f);
 
+            c.set("muted", true);
+            c.set("reason", reason);
+            c.set("type", "VOICE");
+            c.set("date", System.currentTimeMillis());
+            c.set("warner", e.getMember().getId());
+            c.set("permanent", false);
+            Date expireDate = new Date();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(expireDate);
+            calendar.add(Calendar.DATE, days);
+            expireDate = calendar.getTime();
+            c.set("expireDate", expireDate.getTime());
+            c.save(f);
+        } catch(IOException exc) {
+            exc.printStackTrace();
+        }
     }
 
-    public static void tempChatMute(GuildMessageReceivedEvent e, Member m, String reason) {
+    public static void tempChatMute(GuildMessageReceivedEvent e, Member m, String reason, int days) {
+        try {
+            e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Mute", true).get(0));
+            File d = new File("users/" + m.getId());
+            File f = new File("users/" + m.getId() + "/mutes.yml");
+            if(!d.exists()) {
+                d.mkdir();
+            }
+            if (!f.exists()) {
+                f.createNewFile();
+            }
+            YamlConfiguration c = YamlConfiguration.loadConfiguration(f);
 
+            c.set("muted", true);
+            c.set("reason", reason);
+            c.set("type", "CHAT");
+            c.set("date", System.currentTimeMillis());
+            c.set("warner", e.getMember().getId());
+            c.set("permanent", false);
+            Date expireDate = new Date();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(expireDate);
+            calendar.add(Calendar.DATE, days);
+            expireDate = calendar.getTime();
+            c.set("expireDate", expireDate.getTime());
+            c.save(f);
+        } catch(IOException exc) {
+            exc.printStackTrace();
+        }
     }
 
     public static List<Warn> getWarns(Member m, GuildMessageReceivedEvent e) {
