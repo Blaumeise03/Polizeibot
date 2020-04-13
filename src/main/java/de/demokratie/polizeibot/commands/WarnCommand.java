@@ -45,12 +45,14 @@ public class WarnCommand implements Command {
                     return;
                 }
             } catch (Exception ex) {
+                event.getChannel().sendMessage(new EmbedCreator("Diese ID nicht vorhanden!", Color.RED).build()).complete().delete().queueAfter(3, TimeUnit.SECONDS);
+                return;
             }
         } else
             target = mentioned.get(0);
 
         String reason = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
-
+        target.getUser().openPrivateChannel().complete().sendMessage("Verwarnung: " + reason).queue();
 
     }
 }
