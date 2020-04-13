@@ -12,17 +12,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class WarnCommand implements Command {
-
+public class CMD_mute implements Command {
     @Override
     public String getHelp() {
-        return "Verwarnt einen Nutzer\n" +
-                "Syntax: '" + Bot.COMMAND_PREFIX + getInvoke() + " <@Nutzer | Nutzer-ID> <Grund>'";
+        return "Mutet einen Nutzer permanent\n" +
+                "Syntax: '" + Bot.COMMAND_PREFIX + getInvoke() + " <@Nutzer | Nutzer-ID> <Type> <Grund>'";
     }
 
     @Override
     public String getInvoke() {
-        return "warn";
+        return "mute";
     }
 
     @Override
@@ -37,7 +36,7 @@ public class WarnCommand implements Command {
         }
 
         if (args.length < 2) {
-            event.getChannel().sendMessage(new EmbedCreator(Color.RED).setDescription("Fehlende Argumente: <@Nutzer | Nutzer-ID> <Grund>").build()).complete().delete().queueAfter(3, TimeUnit.SECONDS);
+            event.getChannel().sendMessage(new EmbedCreator(Color.RED).setDescription("Fehlende Argumente: <@Nutzer | Nutzer-ID> <Grund> <TYPE>").build()).complete().delete().queueAfter(3, TimeUnit.SECONDS);
             return;
         }
 
@@ -57,8 +56,7 @@ public class WarnCommand implements Command {
         } else
             target = mentioned.get(0);
 
-        String reason = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
-        Utils.warn(target, reason, event.getMember());
-
+        String reason = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
+        Utils.mute(event, target, reason, args[1]);
     }
 }

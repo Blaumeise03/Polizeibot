@@ -9,14 +9,18 @@ public class Mute {
     String reason;
     String type;
     Member m;
-    Member warner;
+    Member muter;
     Date d;
 
-    public Mute(String reason, Member m, Member warner, Date d) {
+    public Mute(String reason, Member m, Member muter, Date d) {
         this.reason = reason;
         this.m = m;
-        this.warner = warner;
+        this.muter = muter;
         this.d = d;
+    }
+
+    public Mute() {
+
     }
 
     public Date getDate() {
@@ -27,8 +31,8 @@ public class Mute {
         return m;
     }
 
-    public Member getWarner() {
-        return warner;
+    public Member getMuter() {
+        return muter;
     }
 
     public String getReason() {
@@ -43,8 +47,8 @@ public class Mute {
         this.m = m;
     }
 
-    public void setWarner(Member warner) {
-        this.warner = warner;
+    public void setMuter(Member muter) {
+        this.muter = muter;
     }
 
     public void setReason(String reason) {

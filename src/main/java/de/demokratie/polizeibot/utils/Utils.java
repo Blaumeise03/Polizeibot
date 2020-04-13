@@ -1,5 +1,7 @@
 package de.demokratie.polizeibot.utils;
 
+import de.demokratie.polizeibot.Bot;
+import de.demokratie.polizeibot.objects.Mute;
 import de.demokratie.polizeibot.objects.Warn;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -38,8 +40,19 @@ public class Utils {
 
     }
 
-    public static void mute(GuildMessageReceivedEvent e, Member m, String reason) {
+    public static void mute(GuildMessageReceivedEvent e, Member m, String reason, String TYPE) {
         try {
+            switch(TYPE) {
+                case "GENERAL":
+                    e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Mute", true).get(0)).queue();
+                    break;
+                case "VOICE":
+                    e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Voice", true).get(0)).queue();
+                    break;
+                case "CHAT":
+                    e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Chatmute", true).get(0)).queue();
+                    break;
+            }
             e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Mute", true).get(0));
             File d = new File("users/" + m.getId());
             File f = new File("users/" + m.getId() + "/mutes.yml");
@@ -53,9 +66,9 @@ public class Utils {
 
             c.set("muted", true);
             c.set("reason", reason);
-            c.set("type", "GENERAL");
+            c.set("type", TYPE);
             c.set("date", System.currentTimeMillis());
-            c.set("warner", e.getMember().getId());
+            c.set("muter", e.getMember().getId());
             c.set("permanent", true);
             c.save(f);
         } catch(IOException exc) {
@@ -63,58 +76,19 @@ public class Utils {
         }
     }
 
-    public static void voiceMute(GuildMessageReceivedEvent e, Member m, String reason) {
+    public static void tempMute(GuildMessageReceivedEvent e, Member m, String reason, int days, String TYPE) {
         try {
-            e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Voicemute", true).get(0));
-            File d = new File("users/" + m.getId());
-            File f = new File("users/" + m.getId() + "/mutes.yml");
-            if(!d.exists()) {
-                d.mkdir();
+            switch(TYPE) {
+                case "GENERAL":
+                    e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Mute", true).get(0)).queue();
+                    break;
+                case "VOICE":
+                    e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Voice", true).get(0)).queue();
+                    break;
+                case "CHAT":
+                    e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Chatmute", true).get(0)).queue();
+                    break;
             }
-            if (!f.exists()) {
-                f.createNewFile();
-            }
-            YamlConfiguration c = YamlConfiguration.loadConfiguration(f);
-
-            c.set("muted", true);
-            c.set("reason", reason);
-            c.set("type", "VOICE");
-            c.set("date", System.currentTimeMillis());
-            c.set("warner", e.getMember().getId());
-            c.set("permanent", true);
-            c.save(f);
-        } catch(IOException exc) {
-            exc.printStackTrace();
-        }
-    }
-
-    public static void chatMute(GuildMessageReceivedEvent e, Member m, String reason) {
-        try {
-            e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Chatmute", true).get(0));
-            File d = new File("users/" + m.getId());
-            File f = new File("users/" + m.getId() + "/mutes.yml");
-            if(!d.exists()) {
-                d.mkdir();
-            }
-            if (!f.exists()) {
-                f.createNewFile();
-            }
-            YamlConfiguration c = YamlConfiguration.loadConfiguration(f);
-
-            c.set("muted", true);
-            c.set("reason", reason);
-            c.set("type", "CHAT");
-            c.set("date", System.currentTimeMillis());
-            c.set("warner", e.getMember().getId());
-            c.set("permanent", true);
-            c.save(f);
-        } catch(IOException exc) {
-            exc.printStackTrace();
-        }
-    }
-
-    public static void tempMute(GuildMessageReceivedEvent e, Member m, String reason, int days) {
-        try {
             e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Mute", true).get(0));
             File d = new File("users/" + m.getId());
             File f = new File("users/" + m.getId() + "/mutes.yml");
@@ -128,9 +102,9 @@ public class Utils {
 
             c.set("muted", true);
             c.set("reason", reason);
-            c.set("type", "GENERAL");
+            c.set("type", TYPE);
             c.set("date", System.currentTimeMillis());
-            c.set("warner", e.getMember().getId());
+            c.set("muter", e.getMember().getId());
             c.set("permanent", false);
             Date expireDate = new Date();
             Calendar calendar = Calendar.getInstance();
@@ -139,68 +113,8 @@ public class Utils {
             expireDate = calendar.getTime();
             c.set("expireDate", expireDate.getTime());
             c.save(f);
-        } catch(IOException exc) {
-            exc.printStackTrace();
-        }
-    }
-
-    public static void tempVoiceMute(GuildMessageReceivedEvent e, Member m, String reason, int days) {
-        try {
-            e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Mute", true).get(0));
-            File d = new File("users/" + m.getId());
-            File f = new File("users/" + m.getId() + "/mutes.yml");
-            if(!d.exists()) {
-                d.mkdir();
-            }
-            if (!f.exists()) {
-                f.createNewFile();
-            }
-            YamlConfiguration c = YamlConfiguration.loadConfiguration(f);
-
-            c.set("muted", true);
-            c.set("reason", reason);
-            c.set("type", "VOICE");
-            c.set("date", System.currentTimeMillis());
-            c.set("warner", e.getMember().getId());
-            c.set("permanent", false);
-            Date expireDate = new Date();
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(expireDate);
-            calendar.add(Calendar.DATE, days);
-            expireDate = calendar.getTime();
-            c.set("expireDate", expireDate.getTime());
-            c.save(f);
-        } catch(IOException exc) {
-            exc.printStackTrace();
-        }
-    }
-
-    public static void tempChatMute(GuildMessageReceivedEvent e, Member m, String reason, int days) {
-        try {
-            e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Mute", true).get(0));
-            File d = new File("users/" + m.getId());
-            File f = new File("users/" + m.getId() + "/mutes.yml");
-            if(!d.exists()) {
-                d.mkdir();
-            }
-            if (!f.exists()) {
-                f.createNewFile();
-            }
-            YamlConfiguration c = YamlConfiguration.loadConfiguration(f);
-
-            c.set("muted", true);
-            c.set("reason", reason);
-            c.set("type", "CHAT");
-            c.set("date", System.currentTimeMillis());
-            c.set("warner", e.getMember().getId());
-            c.set("permanent", false);
-            Date expireDate = new Date();
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(expireDate);
-            calendar.add(Calendar.DATE, days);
-            expireDate = calendar.getTime();
-            c.set("expireDate", expireDate.getTime());
-            c.save(f);
+            File file = new File("tempmutes.yml");
+            YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
         } catch(IOException exc) {
             exc.printStackTrace();
         }
@@ -227,6 +141,27 @@ public class Utils {
             return warns;
         }
         return warns;
+    }
+
+    public static List<Mute> getMutes() {
+        List<Mute> list = new ArrayList<>();
+        Bot.getBot().jda.getGuilds().stream().forEach((guild -> {
+            guild.getMembers().stream().forEach(m -> {
+                File f = new File("users/" + m.getId() + "/mutes.yml");
+                if(f.exists()) {
+                    YamlConfiguration c = YamlConfiguration.loadConfiguration(f);
+                    if(c.getBoolean("muted")) {
+                        Mute mute = new Mute();
+                        long time = c.getLong("expireDate");
+                        mute.setDate(new Date(time));
+                        mute.setMember(guild.getMemberById(m.getId()));
+                        mute.setMuter(guild.getMemberById(c.getString("muter")));
+                        mute.setReason(c.getString("reason"));
+                    }
+                }
+            });
+        }));
+        return list;
     }
 
 }
