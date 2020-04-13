@@ -35,7 +35,7 @@ public class Bot {
     }
 
     public static void main(String[] args) {
-        new Bot();
+       new Bot();
     }
 
     public static Bot getBot() {
