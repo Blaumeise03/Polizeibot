@@ -59,6 +59,5 @@ public class WarnCommand implements Command {
 
         String reason = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
         Utils.warn(target, reason, event.getMember());
-
     }
 }

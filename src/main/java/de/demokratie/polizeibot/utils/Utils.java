@@ -157,6 +157,7 @@ public class Utils {
                         mute.setMember(guild.getMemberById(m.getId()));
                         mute.setMuter(guild.getMemberById(c.getString("muter")));
                         mute.setReason(c.getString("reason"));
+                        list.add(mute);
                     }
                 }
             });

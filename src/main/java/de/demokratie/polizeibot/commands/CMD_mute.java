@@ -58,5 +58,6 @@ public class CMD_mute implements Command {
 
         String reason = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
         Utils.mute(event, target, reason, args[1]);
+
     }
 }

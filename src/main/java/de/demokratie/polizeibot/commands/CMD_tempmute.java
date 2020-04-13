@@ -1,4 +1,23 @@
 package de.demokratie.polizeibot.commands;
 
-public class CMD_tempmute {
+import de.demokratie.polizeibot.Bot;
+import de.demokratie.polizeibot.command.Command;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+
+public class CMD_tempmute implements Command {
+    @Override
+    public String getHelp() {
+        return "Mutet einen Nutzer temporär\n" +
+                "Syntax: '" + Bot.COMMAND_PREFIX + getInvoke() + " <@Nutzer | Nutzer-ID> <Type> <Zeit in Tagen> <Grund>'";
+    }
+
+    @Override
+    public String getInvoke() {
+        return "tempmute";
+    }
+
+    @Override
+    public void execute(GuildMessageReceivedEvent event, String[] args) {
+
+    }
 }

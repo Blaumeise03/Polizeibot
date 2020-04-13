@@ -6,11 +6,11 @@ import java.util.Date;
 
 public class Mute {
 
-    String reason;
-    String type;
-    Member m;
-    Member muter;
-    Date d;
+    private String reason;
+    private String type;
+    private Member m;
+    private Member muter;
+    private Date d;
 
     public Mute(String reason, Member m, Member muter, Date d) {
         this.reason = reason;
