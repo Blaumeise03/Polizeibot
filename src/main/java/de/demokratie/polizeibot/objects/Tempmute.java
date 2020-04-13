@@ -6,12 +6,12 @@ import java.util.Date;
 
 public class Tempmute {
 
-    String reason;
-    String type;
-    Member m;
-    Member warner;
-    Date d;
-    Date expireDate;
+    private String reason;
+    private String type;
+    private Member m;
+    private Member warner;
+    private Date d;
+    private Date expireDate;
 
     public Tempmute(String reason, Member m, Member warner, Date d, Date expireDate) {
         this.reason = reason;

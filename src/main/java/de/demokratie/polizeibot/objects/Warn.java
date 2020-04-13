@@ -6,10 +6,10 @@ import java.util.Date;
 
 public class Warn {
 
-    String reason;
-    Member m;
-    Member warner;
-    Date d;
+    private String reason;
+    private Member m;
+    private Member warner;
+    private Date d;
 
     public Warn() {
 
