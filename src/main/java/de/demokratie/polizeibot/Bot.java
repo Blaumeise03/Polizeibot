@@ -1,6 +1,7 @@
 package de.demokratie.polizeibot;
 
 import de.demokratie.polizeibot.command.CommandHandler;
+import de.demokratie.polizeibot.commands.WarnCommand;
 import net.dv8tion.jda.api.AccountType;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -19,6 +20,7 @@ public class Bot {
         bot = this;
 
         commandHandler = new CommandHandler();
+        commandHandler.addCommand(new WarnCommand());
 
         try {
             jda = new JDABuilder(AccountType.BOT)
