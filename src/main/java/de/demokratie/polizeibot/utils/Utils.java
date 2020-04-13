@@ -37,9 +37,48 @@ public class Utils {
     }
 
     public static void mute(GuildMessageReceivedEvent e, Member m, String reason) {
+        try {
+            e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Mute", true).get(0));
+            File d = new File("users/" + m.getId());
+            File f = new File("users/" + m.getId() + "/mutes.yml");
+            if(!d.exists()) {
+                d.mkdir();
+            }
+            if (!f.exists()) {
+                f.createNewFile();
+            }
+            YamlConfiguration c = YamlConfiguration.loadConfiguration(f);
+
+            if(!c.getBoolean("muted")) {
+                c.set("muted", true);
+            }
+            c.set("reason", reason);
+            c.set("type", "GENERAL");
+            c.set("date", System.currentTimeMillis());
+            c.set("warner", e.getMember().getId());
+        } catch(IOException exc) {
+            exc.printStackTrace();
+        }
+
     }
 
-    public static void tempmute(GuildMessageReceivedEvent e, Member m, String reason, int days) {
+    public static void voiceMute(GuildMessageReceivedEvent e, Member m, String reason) {
+
+    }
+
+    public static void chatMute(GuildMessageReceivedEvent e, Member m, String reason) {
+
+    }
+
+    public static void tempMute(GuildMessageReceivedEvent e, Member m, String reason, int days) {
+    }
+
+    public static void tempVoiceMute(GuildMessageReceivedEvent e, Member m, String reason) {
+
+    }
+
+    public static void tempChatMute(GuildMessageReceivedEvent e, Member m, String reason) {
+
     }
 
     public static List<Warn> getWarns(Member m, GuildMessageReceivedEvent e) {

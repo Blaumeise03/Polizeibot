@@ -4,18 +4,15 @@ import net.dv8tion.jda.api.entities.Member;
 
 import java.util.Date;
 
-public class Warn {
+public class Mute {
 
     String reason;
+    String type;
     Member m;
     Member warner;
     Date d;
 
-    public Warn() {
-
-    }
-
-    public Warn(String reason, Member m, Member warner, Date d) {
+    public Mute(String reason, Member m, Member warner, Date d) {
         this.reason = reason;
         this.m = m;
         this.warner = warner;

@@ -4,26 +4,41 @@ import net.dv8tion.jda.api.entities.Member;
 
 import java.util.Date;
 
-public class Warn {
+public class Tempmute {
 
     String reason;
+    String type;
     Member m;
     Member warner;
     Date d;
+    Date expireDate;
 
-    public Warn() {
-
-    }
-
-    public Warn(String reason, Member m, Member warner, Date d) {
+    public Tempmute(String reason, Member m, Member warner, Date d, Date expireDate) {
         this.reason = reason;
         this.m = m;
         this.warner = warner;
         this.d = d;
+        this.expireDate = expireDate;
     }
 
     public Date getDate() {
         return d;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setExpireDate(Date expireDate) {
+        this.expireDate = expireDate;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Date getExpireDate() {
+        return expireDate;
     }
 
     public Member getMember() {
