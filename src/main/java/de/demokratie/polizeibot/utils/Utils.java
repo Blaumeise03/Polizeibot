@@ -28,6 +28,7 @@ public class Utils {
             List<String> reasons = new ArrayList<>();
             reasons.add(reason);
             c.set("reasons", reasons);
+            c.set(reason + ".warner", warner.getId());
         } catch (IOException e) {
             e.printStackTrace();
         }
