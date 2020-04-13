@@ -4,7 +4,7 @@ Dieser Bot ist der Moderations, bzw. Polizeibot des WBS Demokratie Servers
 ## ToDo
 | Was          | In Planung  | Wird bearbeitet  | Gemacht | Wer              |
 |--------------|-------------|------------------|---------|------------------|
-| Warn Command |             | ✅                |         | cephox, Janisbtw |
+| Warn Command |             |✅|         |cephox,Janisbtw |
 | General Mute |             |                  |         |                  |
 | Chat Mute    |             |                  |         |                  |
 | Voice Mute   |             |                  |         |                  |
