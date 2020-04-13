@@ -29,6 +29,7 @@ public class Utils {
             reasons.add(reason);
             c.set("reasons", reasons);
             c.set(reason + ".warner", warner.getId());
+            c.set(reason + ".date", System.currentTimeMillis());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -49,7 +50,8 @@ public class Utils {
             List<String> reasons = c.getStringList("reasons");
             reasons.stream().forEach((reason) -> {
                 Warn warn = new Warn();
-                warn.setDate(new Date());
+                long millis = c.getLong(reason + ".date");
+                warn.setDate(new Date(millis));
                 warn.setMember(m);
                 Member warner = e.getGuild().getMemberById(reason + ".warner");
                 warn.setWarner(warner);
