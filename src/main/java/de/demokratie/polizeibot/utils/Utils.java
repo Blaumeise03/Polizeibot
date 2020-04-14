@@ -11,6 +11,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -213,12 +215,20 @@ public class Utils {
         File f = new File("users/" + m.getId() + "/mutes.yml");
         YamlConfiguration c = YamlConfiguration.loadConfiguration(f);
         c.set("muted", false);
-        c.set("reason", "");
+        c.set("reason", null);
         c.set("expireDate", null);
         try {
             c.save(f);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public static Date parseDate(String date, String pattern) {
+        try {
+            return new SimpleDateFormat(pattern).parse(date);
+        } catch (ParseException e) {
+            return null;
         }
     }
 
