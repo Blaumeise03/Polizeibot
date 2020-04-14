@@ -11,10 +11,6 @@ public class Warn {
     private Member warner;
     private Date d;
 
-    public Warn() {
-
-    }
-
     public Warn(String reason, Member m, Member warner, Date d) {
         this.reason = reason;
         this.m = m;
