@@ -58,6 +58,12 @@ public class WarnCommand implements Command {
             target = mentioned.get(0);
 
         String reason = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
-        Utils.warn(target, reason, event.getMember());
+        int warns = Utils.warn(target, reason, event.getMember());
+
+        EmbedCreator priv = new EmbedCreator("Du wurdest verwarnt!", Color.YELLOW).setDescription("**__Grund__**\n" +
+                reason).addField("", "**__Bisherige Verwarnungen__**\n" + warns);
+
+        target.getUser().openPrivateChannel().complete().sendMessage(priv.build()).queue();
+
     }
 }
