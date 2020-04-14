@@ -16,7 +16,7 @@ import java.util.List;
 
 public class Utils {
 
-    public static void warn(Member m, String reason, Member warner) {
+    public static int warn(Member m, String reason, Member warner) {
         try {
             File d = new File("users/" + m.getId());
             File f = new File("users/" + m.getId() + "/warns.yml");
@@ -38,10 +38,12 @@ public class Utils {
             c.set(reason + ".date", System.currentTimeMillis());
             c.save(f);
 
+            return warns;
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        return 0;
     }
 
     public static void mute(GuildMessageReceivedEvent e, Member m, String reason, String TYPE) {
