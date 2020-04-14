@@ -14,16 +14,12 @@ public class Mute {
     private Date expireDate;
     private boolean permanent;
 
-
-
-    public Mute(String reason, Member m, Member muter, Date d) {
-        this.reason = reason;
-        this.m = m;
-        this.muter = muter;
-        this.d = d;
+    public String getType() {
+        return type;
     }
 
-    public Mute() {
+    public void setType(String type) {
+        this.type = type;
     }
 
     public Date getDate() {
