@@ -11,6 +11,10 @@ public class Mute {
     private Member m;
     private Member muter;
     private Date d;
+    private Date expireDate;
+    private boolean permanent;
+
+
 
     public Mute(String reason, Member m, Member muter, Date d) {
         this.reason = reason;
@@ -38,6 +42,21 @@ public class Mute {
         return reason;
     }
 
+    public Date getExpireDate() {
+        return expireDate;
+    }
+
+    public void setExpireDate(Date expireDate) {
+        this.expireDate = expireDate;
+    }
+
+    public void setPermanent(boolean permanent) {
+        this.permanent = permanent;
+    }
+
+    public boolean isPermanent() {
+        return permanent;
+    }
     public void setDate(Date d) {
         this.d = d;
     }
