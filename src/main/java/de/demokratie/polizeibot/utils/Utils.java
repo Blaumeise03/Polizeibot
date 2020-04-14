@@ -206,7 +206,6 @@ public class Utils {
             mute.setMuted(info.isMuted());
             info.setMute(mute);
         }
-
         return info;
     }
 
