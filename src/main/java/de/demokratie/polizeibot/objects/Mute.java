@@ -6,6 +6,10 @@ import java.util.Date;
 
 public class Mute {
 
+    private boolean muted;
+
+
+
     private String reason;
     private String type;
     private Member m;
@@ -41,7 +45,13 @@ public class Mute {
     public Date getExpireDate() {
         return expireDate;
     }
+    public boolean isMuted() {
+        return muted;
+    }
 
+    public void setMuted(boolean muted) {
+        this.muted = muted;
+    }
     public void setExpireDate(Date expireDate) {
         this.expireDate = expireDate;
     }

@@ -54,7 +54,7 @@ public class Utils {
                     e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Mute", true).get(0)).queue();
                     break;
                 case "VOICE":
-                    e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Voice", true).get(0)).queue();
+                    e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Voicemute", true).get(0)).queue();
                     break;
                 case "CHAT":
                     e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Chatmute", true).get(0)).queue();
@@ -90,7 +90,7 @@ public class Utils {
                     e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Mute", true).get(0)).queue();
                     break;
                 case "VOICE":
-                    e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Voice", true).get(0)).queue();
+                    e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Voicemute", true).get(0)).queue();
                     break;
                 case "CHAT":
                     e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Chatmute", true).get(0)).queue();
@@ -175,7 +175,7 @@ public class Utils {
                         mute.setMuter(guild.getMemberById(c.getString("muter")));
                         mute.setReason(c.getString("reason"));
                         mute.setPermanent(c.getBoolean("permanent"));
-
+                        mute.setType(c.getString("type"));
                         if(mute.isPermanent()) {
                             Date expireDate = new Date(c.getLong("expireDate"));
                             mute.setExpireDate(expireDate);
@@ -195,13 +195,16 @@ public class Utils {
         if(info.isMuted()) {
             File f = new File("users/" + m.getId() + "/mutes.yml");
             YamlConfiguration c = YamlConfiguration.loadConfiguration(f);
-            info.setPermanent(c.getBoolean("permanent"));
-            if(!info.isPermanent()) {
+            Mute mute = new Mute();
+            mute.setPermanent(c.getBoolean("permanent"));
+            if(!mute.isPermanent()) {
                 Date d = new Date(c.getLong("expireDate"));
-                info.setExpireDate(d);
+                mute.setExpireDate(d);
             }
-            info.setMuteReason(c.getString("reason"));
-            info.setMuteType(c.getString(("type")));
+            mute.setReason(c.getString("reason"));
+            mute.setType(c.getString(("type")));
+            mute.setMuted(info.isMuted());
+            info.setMute(mute);
         }
 
         return info;
