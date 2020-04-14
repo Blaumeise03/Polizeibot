@@ -2,9 +2,15 @@ package de.demokratie.polizeibot;
 
 import de.demokratie.polizeibot.command.CommandHandler;
 import de.demokratie.polizeibot.commands.WarnCommand;
+import de.demokratie.polizeibot.objects.Mute;
+import de.demokratie.polizeibot.utils.Utils;
 import net.dv8tion.jda.api.AccountType;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.entities.Guild;
+
+import java.time.Instant;
+import java.util.Date;
 
 public class Bot {
 
@@ -32,10 +38,43 @@ public class Bot {
             System.err.println("Bot konnte sich nicht verbinden");
         }
 
+        new Thread(() -> {
+
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+            }
+
+            while (true) {
+
+                for (Guild guild : jda.getGuilds()) {
+
+                    for (Mute mute : Utils.getMutes()) {
+
+                        Date expiration = mute.getExpireDate();
+                        Date now = Date.from(Instant.now());
+
+                        if (expiration.after(now)) {
+
+                            guild.removeRoleFromMember(mute.getMember(), guild.getRolesByName("Mute", true).get(0)).queue();
+                            guild.removeRoleFromMember(mute.getMember(), guild.getRolesByName("Voicemute", true).get(0)).queue();
+                            guild.removeRoleFromMember(mute.getMember(), guild.getRolesByName("Chatmute", true).get(0)).queue();
+
+                        }
+                    }
+                }
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                }
+            }
+        }).start();
+
     }
 
     public static void main(String[] args) {
-       new Bot();
+        new Bot();
     }
 
     public static Bot getBot() {
