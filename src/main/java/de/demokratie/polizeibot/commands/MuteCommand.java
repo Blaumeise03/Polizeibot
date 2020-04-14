@@ -36,7 +36,7 @@ public class MuteCommand implements Command {
         }
 
         if (args.length < 3) {
-            event.getChannel().sendMessage(new EmbedCreator(Color.RED).setDescription("Fehlende Argumente: <@Nutzer | Nutzer-ID> <Typ: general, voice, chat> <Grund>").build()).complete().delete().queueAfter(3, TimeUnit.SECONDS);
+            event.getChannel().sendMessage(new EmbedCreator(Color.RED).setDescription("Bitte nutze folgende Syntax: `" + Bot.COMMAND_PREFIX + getInvoke() + "<@Nutzer | Nutzer-ID> <Typ: general, voice, chat> <Grund>`").build()).complete().delete().queueAfter(3, TimeUnit.SECONDS);
             return;
         }
 
