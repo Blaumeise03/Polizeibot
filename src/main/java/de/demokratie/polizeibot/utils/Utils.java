@@ -216,7 +216,7 @@ public class Utils {
         YamlConfiguration c = YamlConfiguration.loadConfiguration(f);
         c.set("muted", false);
         c.set("reason", "");
-        c.set("expireDate", 0);
+        c.set("expireDate", null);
         try {
             c.save(f);
         } catch (IOException e) {
