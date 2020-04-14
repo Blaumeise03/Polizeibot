@@ -20,20 +20,24 @@ public class Utils {
         try {
             File d = new File("users/" + m.getId());
             File f = new File("users/" + m.getId() + "/warns.yml");
-            if(!d.exists()) {
+            if (!d.exists()) {
                 d.mkdir();
             }
             if (!f.exists()) {
                 f.createNewFile();
             }
+
             YamlConfiguration c = YamlConfiguration.loadConfiguration(f);
             int warns = c.getInt("warns");
-            List<String> reasons = new ArrayList<>();
+            c.set("warns", ++warns);
+
+            List<String> reasons = c.getStringList("reasons");
             reasons.add(reason);
             c.set("reasons", reasons);
             c.set(reason + ".warner", warner.getId());
             c.set(reason + ".date", System.currentTimeMillis());
             c.save(f);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
