@@ -16,7 +16,7 @@ public class MuteCommand implements Command {
     @Override
     public String getHelp() {
         return "Mutet einen Nutzer permanent\n" +
-                "Syntax: '" + Bot.COMMAND_PREFIX + getInvoke() + " <@Nutzer | Nutzer-ID> <Type> <Grund>'";
+                "Syntax: '" + Bot.COMMAND_PREFIX + getInvoke() + " <@Nutzer | Nutzer-ID> <Type: general, voice, chat> <Grund>'";
     }
 
     @Override
@@ -57,7 +57,7 @@ public class MuteCommand implements Command {
             target = mentioned.get(0);
 
         String reason = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
-        Utils.mute(event, target, reason, args[1]);
+        Utils.mute(event, target, reason, args[1].toUpperCase());
 
     }
 }
