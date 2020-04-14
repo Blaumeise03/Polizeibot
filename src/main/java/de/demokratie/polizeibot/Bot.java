@@ -1,8 +1,10 @@
 package de.demokratie.polizeibot;
 
 import de.demokratie.polizeibot.command.CommandHandler;
-import de.demokratie.polizeibot.commands.*;
-import de.demokratie.polizeibot.listener.*;
+import de.demokratie.polizeibot.commands.MuteCommand;
+import de.demokratie.polizeibot.commands.TempMuteCommand;
+import de.demokratie.polizeibot.commands.WarnCommand;
+import de.demokratie.polizeibot.listener.JoinListener;
 import de.demokratie.polizeibot.objects.Mute;
 import de.demokratie.polizeibot.utils.Utils;
 import net.dv8tion.jda.api.AccountType;
@@ -28,6 +30,8 @@ public class Bot {
 
         commandHandler = new CommandHandler();
         commandHandler.addCommand(new WarnCommand());
+        commandHandler.addCommand(new TempMuteCommand());
+        commandHandler.addCommand(new MuteCommand());
 
         try {
             jda = new JDABuilder(AccountType.BOT)
