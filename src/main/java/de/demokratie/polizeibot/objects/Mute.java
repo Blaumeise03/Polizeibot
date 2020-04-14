@@ -7,9 +7,6 @@ import java.util.Date;
 public class Mute {
 
     private boolean muted;
-
-
-
     private String reason;
     private String type;
     private Member m;
