@@ -18,10 +18,6 @@ public class CommandHandler extends ListenerAdapter {
         commands = new HashMap<>();
     }
 
-    public void init() {
-        // TODO: Add Commands
-    }
-
     public void handle(GuildMessageReceivedEvent event) {
 
         // Splitting the message by spaces and removing the command prefix
