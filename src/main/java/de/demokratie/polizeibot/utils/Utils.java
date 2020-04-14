@@ -18,10 +18,10 @@ public class Utils {
 
     public static int warn(Member m, String reason, Member warner) {
         try {
-            File d = new File("users/" + m.getId());
+            File d = new File("users/" + m.getId() + "/");
             File f = new File("users/" + m.getId() + "/warns.yml");
             if (!d.exists()) {
-                d.mkdir();
+                d.mkdirs();
             }
             if (!f.exists()) {
                 f.createNewFile();
@@ -60,10 +60,10 @@ public class Utils {
                     break;
             }
             e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Mute", true).get(0));
-            File d = new File("users/" + m.getId());
+            File d = new File("users/" + m.getId() + "/");
             File f = new File("users/" + m.getId() + "/mutes.yml");
             if(!d.exists()) {
-                d.mkdir();
+                d.mkdirs();
             }
             if (!f.exists()) {
                 f.createNewFile();
@@ -96,10 +96,10 @@ public class Utils {
                     break;
             }
             e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Mute", true).get(0));
-            File d = new File("users/" + m.getId());
+            File d = new File("users/" + m.getId() + "/");
             File f = new File("users/" + m.getId() + "/mutes.yml");
             if(!d.exists()) {
-                d.mkdir();
+                d.mkdirs();
             }
             if (!f.exists()) {
                 f.createNewFile();
