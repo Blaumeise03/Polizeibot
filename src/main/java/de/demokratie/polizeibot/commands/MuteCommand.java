@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class CMD_mute implements Command {
+public class MuteCommand implements Command {
     @Override
     public String getHelp() {
         return "Mutet einen Nutzer permanent\n" +

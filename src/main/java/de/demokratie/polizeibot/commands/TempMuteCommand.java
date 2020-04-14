@@ -4,7 +4,7 @@ import de.demokratie.polizeibot.Bot;
 import de.demokratie.polizeibot.command.Command;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
-public class CMD_tempmute implements Command {
+public class TempMuteCommand implements Command {
     @Override
     public String getHelp() {
         return "Mutet einen Nutzer temporär\n" +
