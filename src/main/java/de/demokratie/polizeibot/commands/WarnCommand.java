@@ -37,7 +37,7 @@ public class WarnCommand implements Command {
         }
 
         if (args.length < 2) {
-            event.getChannel().sendMessage(new EmbedCreator(Color.RED).setDescription("Fehlende Argumente: <@Nutzer | Nutzer-ID> <Grund>").build()).complete().delete().queueAfter(3, TimeUnit.SECONDS);
+            event.getChannel().sendMessage(new EmbedCreator(Color.RED).setDescription("Bitte nutze folgende Syntax: `" + Bot.COMMAND_PREFIX + getInvoke() + "<@Nutzer | Nutzer-ID> <Grund>`").build()).complete().delete().queueAfter(3, TimeUnit.SECONDS);
             return;
         }
 
