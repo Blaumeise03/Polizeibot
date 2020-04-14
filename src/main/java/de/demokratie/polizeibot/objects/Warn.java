@@ -18,6 +18,9 @@ public class Warn {
         this.d = d;
     }
 
+    public Warn() {
+    }
+
     public Date getDate() {
         return d;
     }
