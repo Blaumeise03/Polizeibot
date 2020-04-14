@@ -1,6 +1,7 @@
 package de.demokratie.polizeibot.utils;
 
 import de.demokratie.polizeibot.Bot;
+import de.demokratie.polizeibot.objects.Information;
 import de.demokratie.polizeibot.objects.Mute;
 import de.demokratie.polizeibot.objects.Warn;
 import net.dv8tion.jda.api.entities.Member;
@@ -149,6 +150,16 @@ public class Utils {
         return warns;
     }
 
+    public static boolean isMuted(Member m) {
+        boolean muted = false;
+        File f = new File("users/" + m.getId() + "/mutes.yml");
+        if(f.exists()) {
+            YamlConfiguration c = YamlConfiguration.loadConfiguration(f);
+            muted = c.getBoolean("muted");
+        }
+        return muted;
+    }
+
     public static List<Mute> getMutes() {
         List<Mute> list = new ArrayList<>();
         Bot.getBot().jda.getGuilds().stream().forEach((guild -> {
@@ -169,6 +180,25 @@ public class Utils {
             });
         }));
         return list;
+    }
+
+    public static Information getInformation(Member m, GuildMessageReceivedEvent e) {
+        Information info = new Information(m);
+        info.setWarns(getWarns(m, e));
+        info.setMuted(isMuted(m));
+        if(info.isMuted()) {
+            File f = new File("users/" + m.getId() + "/mutes.yml");
+            YamlConfiguration c = YamlConfiguration.loadConfiguration(f);
+            info.setPermanent(c.getBoolean("permanent"));
+            if(!info.isPermanent()) {
+                Date d = new Date(c.getLong("expireDate"));
+                info.setExpireDate(d);
+            }
+            info.setMuteReason(c.getString("reason"));
+            info.setMuteType(c.getString(("type")));
+        }
+
+        return info;
     }
 
 }
