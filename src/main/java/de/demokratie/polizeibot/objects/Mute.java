@@ -19,10 +19,6 @@ public class Mute {
         this.d = d;
     }
 
-    public Mute() {
-
-    }
-
     public Date getDate() {
         return d;
     }
