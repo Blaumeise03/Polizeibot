@@ -16,7 +16,7 @@ public class MuteCommand implements Command {
     @Override
     public String getHelp() {
         return "Mutet einen Nutzer permanent\n" +
-                "Syntax: '" + Bot.COMMAND_PREFIX + getInvoke() + " <@Nutzer | Nutzer-ID> <Type: general, voice, chat> <Grund>'";
+                "Syntax: '" + Bot.COMMAND_PREFIX + getInvoke() + " <@Nutzer | Nutzer-ID> <Typ: general, voice, chat> <Grund>'";
     }
 
     @Override
@@ -35,8 +35,8 @@ public class MuteCommand implements Command {
             return;
         }
 
-        if (args.length < 2) {
-            event.getChannel().sendMessage(new EmbedCreator(Color.RED).setDescription("Fehlende Argumente: <@Nutzer | Nutzer-ID> <Grund> <TYPE>").build()).complete().delete().queueAfter(3, TimeUnit.SECONDS);
+        if (args.length < 3) {
+            event.getChannel().sendMessage(new EmbedCreator(Color.RED).setDescription("Fehlende Argumente: <@Nutzer | Nutzer-ID> <Typ: general, voice, chat> <Grund>").build()).complete().delete().queueAfter(3, TimeUnit.SECONDS);
             return;
         }
 
