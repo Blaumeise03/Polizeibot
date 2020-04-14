@@ -7,14 +7,14 @@ import java.util.List;
 
 public class Information {
 
-    Member m;
-    boolean muted;
+    private Member m;
+    private boolean muted;
 
-    String muteReason;
-    String muteType;
-    boolean isPermanent;
-    Date expireDate;
-    List<Warn> warns;
+    private String muteReason;
+    private String muteType;
+    private boolean isPermanent;
+    private Date expireDate;
+    private List<Warn> warns;
 
     public Information(Member m) {
         this.m = m;
