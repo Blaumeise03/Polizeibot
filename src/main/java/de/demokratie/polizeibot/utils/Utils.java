@@ -60,7 +60,7 @@ public class Utils {
                     e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Chatmute", true).get(0)).queue();
                     break;
             }
-            e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Mute", true).get(0));
+            e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Mute", true).get(0)).queue();
             File d = new File("users/" + m.getId() + "/");
             File f = new File("users/" + m.getId() + "/mutes.yml");
             if(!d.exists()) {
@@ -96,7 +96,7 @@ public class Utils {
                     e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Chatmute", true).get(0)).queue();
                     break;
             }
-            e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Mute", true).get(0));
+            e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Mute", true).get(0)).queue();
             File d = new File("users/" + m.getId() + "/");
             File f = new File("users/" + m.getId() + "/mutes.yml");
             if(!d.exists()) {
@@ -174,6 +174,12 @@ public class Utils {
                         mute.setMember(guild.getMemberById(m.getId()));
                         mute.setMuter(guild.getMemberById(c.getString("muter")));
                         mute.setReason(c.getString("reason"));
+                        mute.setPermanent(c.getBoolean("permanent"));
+
+                        if(mute.isPermanent()) {
+                            Date expireDate = new Date(c.getLong("expireDate"));
+                            mute.setExpireDate(expireDate);
+                        }
                         list.add(mute);
                     }
                 }
