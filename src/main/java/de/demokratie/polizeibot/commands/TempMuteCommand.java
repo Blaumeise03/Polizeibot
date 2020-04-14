@@ -41,6 +41,11 @@ public class TempMuteCommand implements Command {
             return;
         }
 
+        if(!args[1].equalsIgnoreCase("general") && !args[1].equalsIgnoreCase("voice") && !args[1].equalsIgnoreCase("voice")) {
+            event.getChannel().sendMessage(new EmbedCreator(Color.RED).setDescription("Bitte nutze folgende Syntax: `" + Bot.COMMAND_PREFIX + getInvoke() + "<@Nutzer | Nutzer-ID> <Typ: general, voice, chat> <Grund>`").build()).complete().delete().queueAfter(3, TimeUnit.SECONDS);
+            return;
+        }
+
         Member target = null;
         List<Member> mentioned = event.getMessage().getMentionedMembers();
         if (mentioned.isEmpty()) {

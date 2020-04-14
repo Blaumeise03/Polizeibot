@@ -39,6 +39,10 @@ public class MuteCommand implements Command {
             event.getChannel().sendMessage(new EmbedCreator(Color.RED).setDescription("Bitte nutze folgende Syntax: `" + Bot.COMMAND_PREFIX + getInvoke() + "<@Nutzer | Nutzer-ID> <Typ: general, voice, chat> <Grund>`").build()).complete().delete().queueAfter(3, TimeUnit.SECONDS);
             return;
         }
+        if(!args[1].equalsIgnoreCase("general") && !args[1].equalsIgnoreCase("voice") && !args[1].equalsIgnoreCase("voice")) {
+            event.getChannel().sendMessage(new EmbedCreator(Color.RED).setDescription("Bitte nutze folgende Syntax: `" + Bot.COMMAND_PREFIX + getInvoke() + "<@Nutzer | Nutzer-ID> <Typ: general, voice, chat> <Grund>`").build()).complete().delete().queueAfter(3, TimeUnit.SECONDS);
+            return;
+        }
 
         Member target = null;
         List<Member> mentioned = event.getMessage().getMentionedMembers();
@@ -53,9 +57,9 @@ public class MuteCommand implements Command {
                 event.getChannel().sendMessage(new EmbedCreator("Diese ID nicht vorhanden!", Color.RED).build()).complete().delete().queueAfter(3, TimeUnit.SECONDS);
                 return;
             }
-        } else
+        } else {
             target = mentioned.get(0);
-
+        }
         String reason = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
         Utils.mute(event, target, reason, args[1].toUpperCase());
 

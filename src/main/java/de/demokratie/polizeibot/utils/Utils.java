@@ -4,6 +4,7 @@ import de.demokratie.polizeibot.Bot;
 import de.demokratie.polizeibot.objects.Information;
 import de.demokratie.polizeibot.objects.Mute;
 import de.demokratie.polizeibot.objects.Warn;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -127,18 +128,19 @@ public class Utils {
         }
     }
 
-    public static List<Warn> getWarns(Member m, GuildMessageReceivedEvent e) {
+    public static List<Warn> getWarns(Member m) {
         List<Warn> warns = new ArrayList<>();
         File f = new File("users/" + m.getId() + "/warns.yml");
         if(f.exists()) {
             YamlConfiguration c = YamlConfiguration.loadConfiguration(f);
             List<String> reasons = c.getStringList("reasons");
+            Guild guild = Bot.getBot().jda.getGuildsByName("Demokratie Testserver", true).get(0);
             reasons.stream().forEach((reason) -> {
                 Warn warn = new Warn();
                 long millis = c.getLong(reason + ".date");
                 warn.setDate(new Date(millis));
                 warn.setMember(m);
-                Member warner = e.getGuild().getMemberById(reason + ".warner");
+                Member warner = guild.getMemberById(reason + ".warner");
                 warn.setWarner(warner);
                 warn.setReason(reason);
                 warns.add(warn);
@@ -188,9 +190,9 @@ public class Utils {
         return list;
     }
 
-    public static Information getInformation(Member m, GuildMessageReceivedEvent e) {
+    public static Information getInformation(Member m) {
         Information info = new Information(m);
-        info.setWarns(getWarns(m, e));
+        info.setWarns(getWarns(m));
         info.setMuted(isMuted(m));
         if(info.isMuted()) {
             File f = new File("users/" + m.getId() + "/mutes.yml");
@@ -207,6 +209,19 @@ public class Utils {
             info.setMute(mute);
         }
         return info;
+    }
+
+    public static void unmute(Member m) {
+        File f = new File("users/" + m.getId() + "/mutes.yml");
+        YamlConfiguration c = YamlConfiguration.loadConfiguration(f);
+        c.set("muted", false);
+        c.set("reason", "");
+        c.set("expireDate", Long.MAX_VALUE);
+        try {
+            c.save(f);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

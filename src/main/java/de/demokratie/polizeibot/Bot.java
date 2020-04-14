@@ -1,7 +1,8 @@
 package de.demokratie.polizeibot;
 
 import de.demokratie.polizeibot.command.CommandHandler;
-import de.demokratie.polizeibot.commands.WarnCommand;
+import de.demokratie.polizeibot.commands.*;
+import de.demokratie.polizeibot.listener.*;
 import de.demokratie.polizeibot.objects.Mute;
 import de.demokratie.polizeibot.utils.Utils;
 import net.dv8tion.jda.api.AccountType;
@@ -59,7 +60,7 @@ public class Bot {
                             guild.removeRoleFromMember(mute.getMember(), guild.getRolesByName("Mute", true).get(0)).queue();
                             guild.removeRoleFromMember(mute.getMember(), guild.getRolesByName("Voicemute", true).get(0)).queue();
                             guild.removeRoleFromMember(mute.getMember(), guild.getRolesByName("Chatmute", true).get(0)).queue();
-
+                            Utils.unmute(mute.getMember());
                         }
                     }
                 }
@@ -70,7 +71,7 @@ public class Bot {
                 }
             }
         }).start();
-
+        jda.addEventListener(new JoinListener());
     }
 
     public static void main(String[] args) {
