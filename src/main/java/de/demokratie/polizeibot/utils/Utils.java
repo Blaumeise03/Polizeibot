@@ -59,7 +59,7 @@ public class Utils {
                     e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Chatmute", true).get(0)).queue();
                     break;
             }
-            e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Mute", true).get(0));
+            e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Mute", true).get(0)).queue();
             File d = new File("users/" + m.getId() + "/");
             File f = new File("users/" + m.getId() + "/mutes.yml");
             if(!d.exists()) {
@@ -95,7 +95,7 @@ public class Utils {
                     e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Chatmute", true).get(0)).queue();
                     break;
             }
-            e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Mute", true).get(0));
+            e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Mute", true).get(0)).queue();
             File d = new File("users/" + m.getId() + "/");
             File f = new File("users/" + m.getId() + "/mutes.yml");
             if(!d.exists()) {
