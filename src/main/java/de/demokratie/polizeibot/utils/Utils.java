@@ -34,8 +34,8 @@ public class Utils {
             List<String> reasons = c.getStringList("reasons");
             reasons.add(reason);
             c.set("reasons", reasons);
-            c.set(reason + ".warner", warner.getId());
-            c.set(reason + ".date", System.currentTimeMillis());
+            c.set(reason.replace(".", "-") + ".warner", warner.getId());
+            c.set(reason.replace(".", "-") + ".date", System.currentTimeMillis());
             c.save(f);
 
             return warns;
