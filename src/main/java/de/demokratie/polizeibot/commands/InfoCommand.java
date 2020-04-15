@@ -104,6 +104,7 @@ public class InfoCommand implements Command {
                 infoString = infoString + warnString.get(0);
             }
             Message msg = null;
+
             if(target.getNickname() != null) {
                 msg = new EmbedCreator(Color.YELLOW).setTitle("Informationen über " + target.getNickname()).setDescription(infoString).build();
             }
