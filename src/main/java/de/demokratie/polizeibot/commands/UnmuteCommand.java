@@ -48,7 +48,9 @@ public class UnmuteCommand implements Command {
         event.getGuild().removeRoleFromMember(target, event.getGuild().getRolesByName("Mute", true).get(0)).queue();
         event.getGuild().removeRoleFromMember(target, event.getGuild().getRolesByName("Voicemute", true).get(0)).queue();
         event.getGuild().removeRoleFromMember(target, event.getGuild().getRolesByName("Chatmute", true).get(0)).queue();
+
         Utils.unmute(target);
+
         event.getChannel().sendMessage(new EmbedCreator(Color.GREEN).setTitle(target.getEffectiveName() + " entmutet").setDescription(target.getEffectiveName() + " wurde entmutet").build()).complete().delete().queueAfter(3, TimeUnit.SECONDS);
         Utils.log(Color.YELLOW, event.getMember(), target, "wurde entmutet", target.getAsMention() + " wurde entmutet", "Unmute");
     }

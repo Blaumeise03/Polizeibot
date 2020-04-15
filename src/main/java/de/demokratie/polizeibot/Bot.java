@@ -56,6 +56,9 @@ public class Bot {
 
                     for (Mute mute : Utils.getMutes()) {
 
+                        if (mute.isPermanent())
+                            continue;
+
                         Date expiration = mute.getExpireDate();
                         Date now = Date.from(Instant.now());
 

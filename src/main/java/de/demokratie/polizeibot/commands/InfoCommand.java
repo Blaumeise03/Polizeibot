@@ -24,7 +24,7 @@ public class InfoCommand implements Command {
     @Override
     public String getHelp() {
         return "Zeigt Infos über einen User an\n" +
-                "Syntax: '" + Bot.COMMAND_PREFIX + getInvoke() + " <@Nutzer | Nutzer-ID> <Typ: general, voice, chat> <Zeit in Tagen> <Grund>'";
+                "Syntax: `" + Bot.COMMAND_PREFIX + getInvoke() + " <@Nutzer | Nutzer-ID> `";
     }
 
     @Override
@@ -54,50 +54,59 @@ public class InfoCommand implements Command {
             }
             Information info = Utils.getInformation(target);
             OffsetDateTime joined = event.getMember().getTimeJoined();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy-HH:mm:ss");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 
             String dateString = joined.getDayOfMonth() + "." + joined.getMonthValue() + "." + joined.getYear() + " " + joined.getHour() + ":" + joined.getMinute() + ":" + joined.getSecond();
-            String infoString = "Joined on " + dateString + "\n";
+            String infoString = "Gejoint: " + dateString + "\n\n";
             if (info.isMuted()) {
+
                 Mute mute = info.getMute();
-                infoString = infoString + "Muted: true\n" +
-                        "Type: " + mute.getType() + "\n";
+
+                infoString = infoString + "Gemutet: Ja\n" +
+                        "Typ: " + mute.getType() + "\n";
                 if (mute.isPermanent()) {
-                    infoString = infoString + "Expires never\n";
+
+                    infoString = infoString + "Ablaufdatum: Keins (Permanent gemutet)\n";
+
                 } else {
+
                     Date expire = mute.getExpireDate();
                     String expireString = dateFormat.format(expire);
-                    infoString = infoString + "Expires at " + expireString + "\n";
+                    infoString = infoString + "Ablaufdatum: " + expireString + "\n";
+
                 }
+
                 Date muteDate = mute.getDate();
                 String muteString = dateFormat.format(muteDate);
                 Member muter = mute.getMuter();
-                infoString = infoString + "Muted at " + muteString + "\n" +
-                        "By " + muter.getAsMention() + "\n";
+                infoString = infoString + "Gemutet am " + muteString + "\n" +
+                        "Von " + muter.getAsMention() + "\n";
+                infoString += "Begründung: " + mute.getReason() + "\n\n";
             }
             else {
-                infoString = infoString + "Muted: false \n";
+                infoString = infoString + "Gemutet: Nein\n\n";
             }
             if(info.getWarns().size() != 0) {
+
                 List<String> warnString = new ArrayList<>();
                 warnString.add("Warns: " + info.getWarns().size() + "\n");
+
                 info.getWarns().stream().forEach((warn -> {
                     String s = warnString.get(0);
                     Warn lastWarn = info.getWarns().get(info.getWarns().size() - 1);
-                    if(!lastWarn.equals(warn)) {
+                    if (!lastWarn.equals(warn)) {
                         String warnDate = dateFormat.format(warn.getDate());
                         warnString.clear();
-                        s = s + "- \"" + warn.getReason() + "\":\n" +
-                                "- Warned at " + warnDate + "\n" +
-                                "- By " + warn.getWarner().getAsMention() + "\n\n";
+                        s = s + "\"" + warn.getReason() + "\":\n" +
+                                "-> Verwarnt am " + warnDate + "\n" +
+                                "-> Von " + warn.getWarner().getAsMention() + "\n\n";
                         warnString.add(s);
-                    }
-                    else {
+                    } else {
                         String warnDate = dateFormat.format(warn.getDate());
                         warnString.clear();
-                        s = s + "- \"" + warn.getReason() + "\":\n" +
-                                "- Warned at " + warnDate + "\n" +
-                                "- By " + warn.getWarner().getAsMention();
+                        s = s + "\"" + warn.getReason() + "\":\n" +
+                                "-> Verwarnt am " + warnDate + "\n" +
+                                "-> Von " + warn.getWarner().getAsMention();
                         warnString.add(s);
                     }
                 }));
