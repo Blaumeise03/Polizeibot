@@ -11,3 +11,5 @@ Dieser Bot ist der Moderations, bzw. Polizeibot des WBS Demokratie Servers
 ## Contributors
 Janisbtw,
 cephox
+## Reviewers
+Blaumeise03
