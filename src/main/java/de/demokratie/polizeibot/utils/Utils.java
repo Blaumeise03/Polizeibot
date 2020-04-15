@@ -1,6 +1,8 @@
 package de.demokratie.polizeibot.utils;
 
 import de.demokratie.polizeibot.Bot;
+import de.demokratie.polizeibot.date.DateUtil;
+import de.demokratie.polizeibot.embed.EmbedCreator;
 import de.demokratie.polizeibot.objects.Information;
 import de.demokratie.polizeibot.objects.Mute;
 import de.demokratie.polizeibot.objects.Warn;
@@ -9,10 +11,10 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -128,7 +130,7 @@ public class Utils {
         }
     }
 
-    public static void tempMute(GuildMessageReceivedEvent e, Member m, String reason, String until, String TYPE) throws NullPointerException {
+    public static int tempMute(GuildMessageReceivedEvent e, Member m, String reason, String until, String TYPE) {
         try {
             switch (TYPE) {
                 case "GENERAL":
@@ -157,14 +159,27 @@ public class Utils {
             c.set("date", System.currentTimeMillis());
             c.set("muter", e.getMember().getId());
             c.set("permanent", false);
-            Date expireDate = parseDate(until, "dd.MM.yyyy-HH:mm:ss");
+
+            Date expireDate = null;
+            try {
+                expireDate = DateUtil.parse(until);
+            } catch (ParseException ex) {
+                e.getChannel().sendMessage(new EmbedCreator(Color.RED).setDescription("Bitte nutze ein Datum mit folgender Syntax: ```\n" +
+                        "dd.MM.yyyy-HH:mm:ss oder\n" +
+                        "dd.MM.yyyy```").build()).queue();
+                expireDate = new Date();
+                return 0;
+            }
+
             c.set("expireDate", expireDate.getTime());
             c.save(f);
             File file = new File("tempmutes.yml");
             YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
         } catch (IOException exc) {
             exc.printStackTrace();
+            return 0;
         }
+        return 1;
     }
 
     public static List<Warn> getWarns(Member m) {
@@ -217,7 +232,7 @@ public class Utils {
                         mute.setReason(c.getString("reason"));
                         mute.setPermanent(c.getBoolean("permanent"));
                         mute.setType(c.getString("type"));
-                        if(mute.isPermanent()) {
+                        if (!mute.isPermanent()) {
                             Date expireDate = new Date(c.getLong("expireDate"));
                             mute.setExpireDate(expireDate);
                         }
@@ -272,13 +287,4 @@ public class Utils {
             e.printStackTrace();
         }
     }
-
-    public static Date parseDate(String date, String pattern) {
-        try {
-            return new SimpleDateFormat(pattern).parse(date);
-        } catch (ParseException e) {
-            return null;
-        }
-    }
-
 }

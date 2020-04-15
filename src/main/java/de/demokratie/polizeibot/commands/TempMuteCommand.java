@@ -37,12 +37,12 @@ public class TempMuteCommand implements Command {
         }
 
         if (args.length < 4) {
-            event.getChannel().sendMessage(new EmbedCreator(Color.RED).setDescription("Bitte nutze folgende Syntax: `" + Bot.COMMAND_PREFIX + getInvoke() + "<@Nutzer | Nutzer-ID> <Typ: general, voice, chat> <Zeit in Tagen> <Grund>`").build()).complete().delete().queueAfter(3, TimeUnit.SECONDS);
+            event.getChannel().sendMessage(new EmbedCreator(Color.RED).setDescription("Bitte nutze folgende Syntax: `" + Bot.COMMAND_PREFIX + getInvoke() + "<@Nutzer | Nutzer-ID> <Typ: general, voice, chat> <Zeit in Tagen> <Grund>`").build()).complete().delete().queueAfter(10, TimeUnit.SECONDS);
             return;
         }
 
         if(!args[1].equalsIgnoreCase("general") && !args[1].equalsIgnoreCase("voice") && !args[1].equalsIgnoreCase("voice")) {
-            event.getChannel().sendMessage(new EmbedCreator(Color.RED).setDescription("Bitte nutze folgende Syntax: `" + Bot.COMMAND_PREFIX + getInvoke() + "<@Nutzer | Nutzer-ID> <Typ: general, voice, chat> <Grund>`").build()).complete().delete().queueAfter(3, TimeUnit.SECONDS);
+            event.getChannel().sendMessage(new EmbedCreator(Color.RED).setDescription("Bitte nutze folgende Syntax: `" + Bot.COMMAND_PREFIX + getInvoke() + "<@Nutzer | Nutzer-ID> <Typ: general, voice, chat> <Zeit in Tagen> <Grund>`").build()).complete().delete().queueAfter(10, TimeUnit.SECONDS);
             return;
         }
 
@@ -68,21 +68,12 @@ public class TempMuteCommand implements Command {
             days = Integer.parseInt(args[2]);
         } catch (Exception ex) {
 
-            try {
-
-                Utils.tempMute(event, target, reason, args[2], args[1].toUpperCase());
-
-            } catch (Exception ex1) {
-                event.getChannel().sendMessage(new EmbedCreator(Color.RED).setDescription("Bitte gib als 3. Argument (die Zeit in Tagen) nur als Zahl oder als folgendes Datum an:\n" +
-                        "dd.MM.yyyy-HH:mm:ss (z.B. 01.01.2020-15:05:45)\n" +
-                        "Es **MUSS** dabei die **UHRZEIT** mit Sekunden angegeben werden!").build()).complete().delete().queueAfter(3, TimeUnit.SECONDS);
-                ex1.printStackTrace();
+            if (Utils.tempMute(event, target, reason, args[2], args[1].toUpperCase()) == 1)
                 return;
-            }
 
             event.getChannel().sendMessage(new EmbedCreator(Color.RED).setDescription("Bitte gib als 3. Argument (die Zeit in Tagen) nur als Zahl oder als folgendes Datum an:\n" +
                     "dd.MM.yyyy-HH:mm:ss (z.B. 01.01.2020-15:05:45)\n" +
-                    "Es **MUSS** dabei die **UHRZEIT** mit Sekunden angegeben werden!").build()).complete().delete().queueAfter(3, TimeUnit.SECONDS);
+                    "Es **MUSS** dabei die **UHRZEIT** mit Sekunden angegeben werden!").build()).complete().delete().queueAfter(10, TimeUnit.SECONDS);
             return;
         }
 

@@ -59,7 +59,7 @@ public class Bot {
                         Date expiration = mute.getExpireDate();
                         Date now = Date.from(Instant.now());
 
-                        if (expiration.after(now)) {
+                        if (now.after(expiration)) {
 
                             guild.removeRoleFromMember(mute.getMember(), guild.getRolesByName("Mute", true).get(0)).queue();
                             guild.removeRoleFromMember(mute.getMember(), guild.getRolesByName("Voicemute", true).get(0)).queue();
