@@ -8,6 +8,7 @@ import de.demokratie.polizeibot.objects.Mute;
 import de.demokratie.polizeibot.objects.Warn;
 import de.demokratie.polizeibot.utils.Utils;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.awt.*;
@@ -102,6 +103,8 @@ public class InfoCommand implements Command {
                 }));
                 infoString = infoString + warnString.get(0);
             }
+            Message msg = new EmbedCreator(Color.YELLOW).setTitle("Informationen über " + target.getNickname()).setDescription(infoString).build();
+            event.getChannel().sendMessage(msg).queue();
         }
         else {
             event.getChannel().sendMessage(new EmbedCreator(Color.RED).setDescription("Bitte nutze folgende Syntax: '" + Bot.COMMAND_PREFIX + getInvoke() + " <@Nutzer | Nutzer-ID>'").build()).complete().delete().queueAfter(3, TimeUnit.SECONDS);
