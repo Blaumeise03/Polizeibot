@@ -267,7 +267,7 @@ public class Utils {
             mute.setReason(c.getString("reason"));
             mute.setType(c.getString(("type")));
             mute.setMuted(info.isMuted());
-
+            mute.setDate(new Date(c.getLong("date")));
             /*List<Member> muter = new ArrayList<>();
 
             Bot.getBot().jda.getGuilds().stream().forEach((guild -> {
