@@ -2,6 +2,7 @@ package de.demokratie.polizeibot;
 
 import de.demokratie.polizeibot.command.CommandHandler;
 import de.demokratie.polizeibot.commands.*;
+import de.demokratie.polizeibot.config.Config;
 import de.demokratie.polizeibot.listener.JoinListener;
 import de.demokratie.polizeibot.objects.Mute;
 import de.demokratie.polizeibot.utils.Utils;
@@ -10,6 +11,7 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Guild;
 
+import java.io.IOException;
 import java.time.Instant;
 import java.util.Date;
 
@@ -22,9 +24,29 @@ public class Bot {
     public JDA jda;
     public CommandHandler commandHandler;
 
+    public static Config config;
+
     public Bot() {
 
         bot = this;
+
+        try {
+            config = new Config("config.properties");
+        } catch (IOException e) {
+        }
+
+        String token = config.getToken();
+        String temp = token;
+
+        while (token.equalsIgnoreCase(temp)) {
+            System.out.println("Waiting for entering the token...");
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+            }
+            token = config.getToken();
+            config.reload();
+        }
 
         commandHandler = new CommandHandler();
         commandHandler.addCommand(new WarnCommand());
@@ -36,7 +58,7 @@ public class Bot {
 
         try {
             jda = new JDABuilder(AccountType.BOT)
-                    .setToken("TOKEN")
+                    .setToken(token)
                     .setAutoReconnect(true)
                     .addEventListeners(commandHandler)
                     .build().awaitReady();
