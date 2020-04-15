@@ -166,7 +166,7 @@ public class Utils {
             } catch (ParseException ex) {
                 e.getChannel().sendMessage(new EmbedCreator(Color.RED).setDescription("Bitte nutze ein Datum mit folgender Syntax: ```\n" +
                         "dd.MM.yyyy-HH:mm:ss oder\n" +
-                        "dd.MM.yyyy").build()).queue();
+                        "dd.MM.yyyy```").build()).queue();
                 expireDate = new Date();
                 return 0;
             }
