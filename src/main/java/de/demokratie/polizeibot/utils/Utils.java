@@ -2,6 +2,7 @@ package de.demokratie.polizeibot.utils;
 
 import de.demokratie.polizeibot.Bot;
 import de.demokratie.polizeibot.date.DateUtil;
+import de.demokratie.polizeibot.embed.EmbedCreator;
 import de.demokratie.polizeibot.objects.Information;
 import de.demokratie.polizeibot.objects.Mute;
 import de.demokratie.polizeibot.objects.Warn;
@@ -10,6 +11,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
@@ -162,7 +164,9 @@ public class Utils {
             try {
                 expireDate = DateUtil.parse(until);
             } catch (ParseException ex) {
-                ex.printStackTrace();
+                e.getChannel().sendMessage(new EmbedCreator(Color.RED).setDescription("Bitte nutze ein Datum mit folgender Syntax: ```\n" +
+                        "dd.MM.yyyy-HH:mm:ss oder\n" +
+                        "dd.MM.yyyy").build()).queue();
                 expireDate = new Date();
                 return 0;
             }
