@@ -55,16 +55,16 @@ public class InfoCommand implements Command {
             Information info = Utils.getInformation(target);
             OffsetDateTime joined = event.getMember().getTimeJoined();
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy-HH:mm:ss");
-            String dateString = dateFormat.format(joined);
+
+            String dateString = joined.getDayOfMonth() + "." + joined.getMonthValue() + "." + joined.getYear() + " " + joined.getHour() + ":" + joined.getMinute() + ":" + joined.getSecond();
             String infoString = "Joined on " + dateString + "\n";
-            if(info.isMuted()) {
+            if (info.isMuted()) {
                 Mute mute = info.getMute();
                 infoString = infoString + "Muted: true\n" +
                         "Type: " + mute.getType() + "\n";
-                if(mute.isPermanent()) {
+                if (mute.isPermanent()) {
                     infoString = infoString + "Expires never\n";
-                }
-                else {
+                } else {
                     Date expire = mute.getExpireDate();
                     String expireString = dateFormat.format(expire);
                     infoString = infoString + "Expires at " + expireString + "\n";

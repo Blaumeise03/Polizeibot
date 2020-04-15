@@ -251,18 +251,25 @@ public class Utils {
         info.setWarns(getWarns(m));
         info.setMuted(isMuted(m));
         if(info.isMuted()) {
+
             File f = new File("users/" + m.getId() + "/mutes.yml");
+
             YamlConfiguration c = YamlConfiguration.loadConfiguration(f);
+
             Mute mute = new Mute();
             mute.setPermanent(c.getBoolean("permanent"));
-            if(!mute.isPermanent()) {
+
+            if (!mute.isPermanent()) {
                 Date d = new Date(c.getLong("expireDate"));
                 mute.setExpireDate(d);
             }
+
             mute.setReason(c.getString("reason"));
             mute.setType(c.getString(("type")));
             mute.setMuted(info.isMuted());
-            List<Member> muter = new ArrayList<>();
+
+            /*List<Member> muter = new ArrayList<>();
+
             Bot.getBot().jda.getGuilds().stream().forEach((guild -> {
                 guild.getMembers().stream().forEach((member -> {
                     if(member.getId() == c.getString("muter")) {
@@ -271,7 +278,9 @@ public class Utils {
                     }
                 }));
             }));
-            mute.setMuter(muter.get(0));
+
+            mute.setMuter(muter.get(0));*/
+            mute.setMuter(m.getGuild().getMemberById(c.getString("muter")));
             info.setMute(mute);
         }
         return info;
