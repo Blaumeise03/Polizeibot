@@ -8,7 +8,9 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.awt.*;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -67,17 +69,40 @@ public class TempMuteCommand implements Command {
         try {
             days = Integer.parseInt(args[2]);
         } catch (Exception ex) {
+            Date date = Utils.tempMute(event, target, reason, args[2], args[1].toUpperCase());
+            if (date != null) {
 
-            if (Utils.tempMute(event, target, reason, args[2], args[1].toUpperCase()) == 1)
+                target.getUser().openPrivateChannel().complete().sendMessage(
+                        new EmbedCreator(Color.RED)
+                                .setDescription("Du wurdest temporär gemutet!")
+                                .addField("", "**__Grund:__**\n" + reason)
+                                .addField("", "**__Auslaufdatum__**\n" + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(date))
+                                .build()
+                ).queue();
+
+                Utils.log(Color.RED, member, target, "hat gegen Regeln verstoßen, führt zu temporärem Mute", target.getAsMention() + " wurde bis " + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(date) + " temporär gemutet", "Regelverstoß", reason);
+
                 return;
+            }
 
-            event.getChannel().sendMessage(new EmbedCreator(Color.RED).setDescription("Bitte gib als 3. Argument (die Zeit in Tagen) nur als Zahl oder als folgendes Datum an:\n" +
-                    "dd.MM.yyyy-HH:mm:ss (z.B. 01.01.2020-15:05:45)\n" +
-                    "Es **MUSS** dabei die **UHRZEIT** mit Sekunden angegeben werden!").build()).complete().delete().queueAfter(10, TimeUnit.SECONDS);
+            event.getChannel().sendMessage(new EmbedCreator(Color.RED)
+                    .setDescription("Bitte gib das 3. Argument als Zahl in Tagen oder Datum mit folgender Syntax an:```\n" +
+                            "dd.MM.yyyy-HH:mm:ss oder\n" +
+                            "dd.MM.yyyy```").build()).queue();
             return;
         }
 
-        Utils.tempMute(event, target, reason, days, args[1].toUpperCase());
+        Date date = Utils.tempMute(event, target, reason, days, args[1].toUpperCase());
+
+        target.getUser().openPrivateChannel().complete().sendMessage(
+                new EmbedCreator(Color.RED)
+                        .setDescription("Du wurdest temporär gemutet!")
+                        .addField("", "**__Grund:__**\n" + reason)
+                        .addField("", "**__Auslaufdatum__**\n" + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(date))
+                        .build()
+        ).queue();
+
+        Utils.log(Color.RED, member, target, "hat gegen Regeln verstoßen, führt zu temporärem Mute", target.getAsMention() + " wurde bis " + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(date) + " temporär gemutet", "Regelverstoß", reason);
 
     }
 }

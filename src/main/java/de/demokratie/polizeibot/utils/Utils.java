@@ -87,9 +87,9 @@ public class Utils {
         }
     }
 
-    public static void tempMute(GuildMessageReceivedEvent e, Member m, String reason, int days, String TYPE) {
+    public static Date tempMute(GuildMessageReceivedEvent e, Member m, String reason, int days, String TYPE) {
         try {
-            switch(TYPE) {
+            switch (TYPE) {
                 case "GENERAL":
                     e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Mute", true).get(0)).queue();
                     break;
@@ -125,12 +125,14 @@ public class Utils {
             c.save(f);
             File file = new File("tempmutes.yml");
             YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+            return expireDate;
         } catch (IOException exc) {
             exc.printStackTrace();
         }
+        return null;
     }
 
-    public static int tempMute(GuildMessageReceivedEvent e, Member m, String reason, String until, String TYPE) {
+    public static Date tempMute(GuildMessageReceivedEvent e, Member m, String reason, String until, String TYPE) {
         try {
             switch (TYPE) {
                 case "GENERAL":
@@ -168,18 +170,18 @@ public class Utils {
                         "dd.MM.yyyy-HH:mm:ss oder\n" +
                         "dd.MM.yyyy```").build()).queue();
                 expireDate = new Date();
-                return 0;
+                return null;
             }
 
             c.set("expireDate", expireDate.getTime());
             c.save(f);
             File file = new File("tempmutes.yml");
             YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+            return expireDate;
         } catch (IOException exc) {
             exc.printStackTrace();
-            return 0;
+            return null;
         }
-        return 1;
     }
 
     public static List<Warn> getWarns(Member m) {
@@ -286,5 +288,20 @@ public class Utils {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void log(Color color, Member member, Member target, String what_he_done, String long_descr, String offense, String reason) {
+        Guild guild = member.getGuild();
+
+        EmbedCreator embed = new EmbedCreator(color);
+        embed.setMessageContent(target.getAsMention() + " " + what_he_done);
+        embed.setTitle(offense);
+        embed.setDescription(long_descr);
+        embed.addField("Begündung", reason);
+        embed.addField("Von", member.getAsMention());
+        embed.addField("", "\n" + member.getAsMention() + ", wenn möglich, bitte Beweis in Form von Bild/Ton senden.");
+
+        guild.getTextChannelsByName("logbuch", true).get(0).sendMessage(embed.build()).queue();
+
     }
 }
