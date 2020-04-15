@@ -313,4 +313,18 @@ public class Utils {
         guild.getTextChannelsByName("logbuch", true).get(0).sendMessage(embed.build()).queue();
 
     }
+
+    public static void log(Color color, Member member, Member target, String what_he_done, String long_descr, String title) {
+        Guild guild = member.getGuild();
+
+        EmbedCreator embed = new EmbedCreator(color);
+        embed.setMessageContent(target.getAsMention() + " " + what_he_done);
+        embed.setTitle(title);
+        embed.setDescription(long_descr);
+        embed.addField("Von", member.getAsMention());
+
+        guild.getTextChannelsByName("logbuch", true).get(0).sendMessage(embed.build()).queue();
+
+    }
+
 }

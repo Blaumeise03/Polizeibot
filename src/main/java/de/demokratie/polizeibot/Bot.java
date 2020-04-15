@@ -1,10 +1,7 @@
 package de.demokratie.polizeibot;
 
 import de.demokratie.polizeibot.command.CommandHandler;
-import de.demokratie.polizeibot.commands.InfoCommand;
-import de.demokratie.polizeibot.commands.MuteCommand;
-import de.demokratie.polizeibot.commands.TempMuteCommand;
-import de.demokratie.polizeibot.commands.WarnCommand;
+import de.demokratie.polizeibot.commands.*;
 import de.demokratie.polizeibot.listener.JoinListener;
 import de.demokratie.polizeibot.objects.Mute;
 import de.demokratie.polizeibot.utils.Utils;
@@ -34,6 +31,7 @@ public class Bot {
         commandHandler.addCommand(new TempMuteCommand());
         commandHandler.addCommand(new MuteCommand());
         commandHandler.addCommand(new InfoCommand());
+        commandHandler.addCommand(new UnmuteCommand());
 
         try {
             jda = new JDABuilder(AccountType.BOT)
