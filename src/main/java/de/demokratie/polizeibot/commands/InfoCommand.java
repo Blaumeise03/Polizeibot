@@ -76,11 +76,11 @@ public class InfoCommand implements Command {
                         "By " + muter.getAsMention() + "\n";
             }
             else {
-                infoString = infoString + "Muted: false";
+                infoString = infoString + "Muted: false \n";
             }
             if(info.getWarns().size() != 0) {
                 List<String> warnString = new ArrayList<>();
-                warnString.add("Warns: " + info.getWarns().size());
+                warnString.add("Warns: " + info.getWarns().size() + "\n");
                 info.getWarns().stream().forEach((warn -> {
                     String s = warnString.get(0);
                     Warn lastWarn = info.getWarns().get(info.getWarns().size() - 1);
@@ -88,22 +88,28 @@ public class InfoCommand implements Command {
                         String warnDate = dateFormat.format(warn.getDate());
                         warnString.clear();
                         s = s + "- \"" + warn.getReason() + "\":\n" +
-                                " Warned at " + warnDate + "\n" +
-                                " By " + warn.getWarner().getAsMention() + "\n\n";
+                                "- Warned at " + warnDate + "\n" +
+                                "- By " + warn.getWarner().getAsMention() + "\n\n";
                         warnString.add(s);
                     }
                     else {
                         String warnDate = dateFormat.format(warn.getDate());
                         warnString.clear();
                         s = s + "- \"" + warn.getReason() + "\":\n" +
-                                " Warned at " + warnDate + "\n" +
-                                " By " + warn.getWarner().getAsMention();
+                                "- Warned at " + warnDate + "\n" +
+                                "- By " + warn.getWarner().getAsMention();
                         warnString.add(s);
                     }
                 }));
                 infoString = infoString + warnString.get(0);
             }
-            Message msg = new EmbedCreator(Color.YELLOW).setTitle("Informationen über " + target.getNickname()).setDescription(infoString).build();
+            Message msg = null;
+            if(target.getNickname() != null) {
+                msg = new EmbedCreator(Color.YELLOW).setTitle("Informationen über " + target.getNickname()).setDescription(infoString).build();
+            }
+            else {
+                msg = new EmbedCreator(Color.YELLOW).setTitle("Informationen über " + target.getEffectiveName()).setDescription(infoString).build();
+            }
             event.getChannel().sendMessage(msg).queue();
         }
         else {
