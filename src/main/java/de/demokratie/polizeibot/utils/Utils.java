@@ -128,7 +128,7 @@ public class Utils {
         }
     }
 
-    public static void tempMute(GuildMessageReceivedEvent e, Member m, String reason, String until, String TYPE) {
+    public static void tempMute(GuildMessageReceivedEvent e, Member m, String reason, String until, String TYPE) throws NullPointerException {
         try {
             switch (TYPE) {
                 case "GENERAL":
