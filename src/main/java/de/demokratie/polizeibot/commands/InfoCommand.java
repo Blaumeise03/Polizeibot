@@ -34,8 +34,16 @@ public class InfoCommand implements Command {
 
     @Override
     public void execute(GuildMessageReceivedEvent event, String[] args) {
+        deleteLastMessage(event);
+
         Member m = event.getMember();
-        if(args.length == 1) {
+
+        if (!m.getRoles().contains(event.getGuild().getRolesByName("Polizei", true).get(0))) {
+            event.getChannel().sendMessage(new EmbedCreator(Color.RED).setDescription("Du hast keine Berechtigung, um diesen Befehl auszuführen").build()).complete().delete().queueAfter(3, TimeUnit.SECONDS);
+            return;
+        }
+
+        if (args.length == 1) {
             Member target = null;
             List<Member> mentioned = event.getMessage().getMentionedMembers();
             if (mentioned.isEmpty()) {

@@ -32,6 +32,7 @@ public class Bot {
         commandHandler.addCommand(new MuteCommand());
         commandHandler.addCommand(new InfoCommand());
         commandHandler.addCommand(new UnmuteCommand());
+        commandHandler.addCommand(new HelpCommand(commandHandler));
 
         try {
             jda = new JDABuilder(AccountType.BOT)

@@ -16,7 +16,7 @@ public class MuteCommand implements Command {
     @Override
     public String getHelp() {
         return "Mutet einen Nutzer permanent\n" +
-                "Syntax: '" + Bot.COMMAND_PREFIX + getInvoke() + " <@Nutzer | Nutzer-ID> <Typ: general, voice, chat> <Grund>'";
+                "Syntax: `" + Bot.COMMAND_PREFIX + getInvoke() + " <@Nutzer | Nutzer-ID> <Typ: general, voice, chat> <Grund>`";
     }
 
     @Override
@@ -36,11 +36,11 @@ public class MuteCommand implements Command {
         }
 
         if (args.length < 3) {
-            event.getChannel().sendMessage(new EmbedCreator(Color.RED).setDescription("Bitte nutze folgende Syntax: `" + Bot.COMMAND_PREFIX + getInvoke() + "<@Nutzer | Nutzer-ID> <Typ: general, voice, chat> <Grund>`").build()).complete().delete().queueAfter(3, TimeUnit.SECONDS);
+            event.getChannel().sendMessage(new EmbedCreator(Color.RED).setDescription("Bitte nutze folgende Syntax: `" + Bot.COMMAND_PREFIX + getInvoke() + "<@Nutzer | Nutzer-ID> <Typ: general, voice, chat> <Grund>`").build()).complete().delete().queueAfter(10, TimeUnit.SECONDS);
             return;
         }
         if(!args[1].equalsIgnoreCase("general") && !args[1].equalsIgnoreCase("voice") && !args[1].equalsIgnoreCase("voice")) {
-            event.getChannel().sendMessage(new EmbedCreator(Color.RED).setDescription("Bitte nutze folgende Syntax: `" + Bot.COMMAND_PREFIX + getInvoke() + "<@Nutzer | Nutzer-ID> <Typ: general, voice, chat> <Grund>`").build()).complete().delete().queueAfter(3, TimeUnit.SECONDS);
+            event.getChannel().sendMessage(new EmbedCreator(Color.RED).setDescription("Bitte nutze folgende Syntax: `" + Bot.COMMAND_PREFIX + getInvoke() + "<@Nutzer | Nutzer-ID> <Typ: general, voice, chat> <Grund>`").build()).complete().delete().queueAfter(10, TimeUnit.SECONDS);
             return;
         }
 

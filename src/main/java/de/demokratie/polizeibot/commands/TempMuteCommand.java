@@ -18,7 +18,7 @@ public class TempMuteCommand implements Command {
     @Override
     public String getHelp() {
         return "Mutet einen Nutzer temporär\n" +
-                "Syntax: '" + Bot.COMMAND_PREFIX + getInvoke() + " <@Nutzer | Nutzer-ID> <Typ: general, voice, chat> <Zeit in Tagen> <Grund>'";
+                "Syntax: `" + Bot.COMMAND_PREFIX + getInvoke() + " <@Nutzer | Nutzer-ID> <Typ: general, voice, chat> <Zeit in Tagen ODER als Datum (Weitere Infos: \"" + Bot.COMMAND_PREFIX + "help tempmute\")> <Grund>`";
     }
 
     @Override

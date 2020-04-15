@@ -15,7 +15,7 @@ public class UnmuteCommand implements Command {
     @Override
     public String getHelp() {
         return "Entmutet einen Nutzer\n" +
-                "Syntax: '" + Bot.COMMAND_PREFIX + getInvoke() + " <@Nutzer | Nutzer-ID>'";
+                "Syntax: `" + Bot.COMMAND_PREFIX + getInvoke() + " <@Nutzer | Nutzer-ID>`";
     }
 
     @Override
@@ -25,7 +25,16 @@ public class UnmuteCommand implements Command {
 
     @Override
     public void execute(GuildMessageReceivedEvent event, String[] args) {
-        if(args.length != 1) {
+        deleteLastMessage(event);
+
+        Member member = event.getMember();
+
+        if (!member.getRoles().contains(event.getGuild().getRolesByName("Polizei", true).get(0))) {
+            event.getChannel().sendMessage(new EmbedCreator(Color.RED).setDescription("Du hast keine Berechtigung, um diesen Befehl auszuführen").build()).complete().delete().queueAfter(3, TimeUnit.SECONDS);
+            return;
+        }
+
+        if (args.length != 1) {
             event.getChannel().sendMessage(new EmbedCreator(Color.RED).setDescription("Bitte nutze folgende Syntax: `" + Bot.COMMAND_PREFIX + getInvoke() + "<@Nutzer | Nutzer-ID>`").build()).complete().delete().queueAfter(3, TimeUnit.SECONDS);
             return;
         }

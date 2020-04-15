@@ -17,7 +17,7 @@ public class WarnCommand implements Command {
     @Override
     public String getHelp() {
         return "Verwarnt einen Nutzer\n" +
-                "Syntax: '" + Bot.COMMAND_PREFIX + getInvoke() + " <@Nutzer | Nutzer-ID> <Grund>'";
+                "Syntax: `" + Bot.COMMAND_PREFIX + getInvoke() + " <@Nutzer | Nutzer-ID> <Grund>`";
     }
 
     @Override
