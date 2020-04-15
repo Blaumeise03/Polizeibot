@@ -245,6 +245,16 @@ public class Utils {
             mute.setReason(c.getString("reason"));
             mute.setType(c.getString(("type")));
             mute.setMuted(info.isMuted());
+            List<Member> muter = new ArrayList<>();
+            Bot.getBot().jda.getGuilds().stream().forEach((guild -> {
+                guild.getMembers().stream().forEach((member -> {
+                    if(member.getId() == c.getString("muter")) {
+                        muter.clear();
+                        muter.add(member);
+                    }
+                }));
+            }));
+            mute.setMuter(muter.get(0));
             info.setMute(mute);
         }
         return info;
