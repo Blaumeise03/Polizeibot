@@ -102,7 +102,7 @@ public class TempMuteCommand implements Command {
                         .build()
         ).queue();
 
-        Utils.log(Color.RED, member, target, "hat gegen Regeln verstoßen, führt zu temporärem Mute", target.getAsMention() + " wurde bis " + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(date) + " temporär gemutet", "Regelverstoß", reason);
+        Utils.log(Color.RED, member, target, "hat gegen Regeln verstoßen, führt zu temporärem Mute", target.getAsMention() + " wurde bis " + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(date) + " temporär gemutet\nTyp: " + args[1].toUpperCase(), "Regelverstoß", reason);
 
     }
 }

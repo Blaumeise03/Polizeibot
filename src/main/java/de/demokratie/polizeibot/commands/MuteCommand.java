@@ -69,7 +69,7 @@ public class MuteCommand implements Command {
                         .addField("", "**__Grund:__**\n" + reason)
                         .build()
         ).queue();
-        Utils.log(Color.RED, member, target, "hat gegen Regeln verstoßen, führt zu permanentem Mute", target.getAsMention() + " wurde permanent gemutet", "Regelverstoß", reason);
+        Utils.log(Color.RED, member, target, "hat gegen Regeln verstoßen, führt zu permanentem Mute", target.getAsMention() + " wurde permanent gemutet\nTyp: " + args[1].toUpperCase(), "Regelverstoß", reason);
 
     }
 }
