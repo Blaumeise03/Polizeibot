@@ -39,7 +39,7 @@ public class MuteCommand implements Command {
             event.getChannel().sendMessage(new EmbedCreator(Color.RED).setDescription("Bitte nutze folgende Syntax: `" + Bot.COMMAND_PREFIX + getInvoke() + "<@Nutzer | Nutzer-ID> <Typ: general, voice, chat> <Grund>`").build()).complete().delete().queueAfter(10, TimeUnit.SECONDS);
             return;
         }
-        if(!args[1].equalsIgnoreCase("general") && !args[1].equalsIgnoreCase("voice")) {
+        if(!args[1].equalsIgnoreCase("general") && !args[1].equalsIgnoreCase("voice") && !args[1].equalsIgnoreCase("chat")) {
             event.getChannel().sendMessage(new EmbedCreator(Color.RED).setDescription("Bitte nutze folgende Syntax: `" + Bot.COMMAND_PREFIX + getInvoke() + "<@Nutzer | Nutzer-ID> <Typ: general, voice, chat> <Grund>`").build()).complete().delete().queueAfter(10, TimeUnit.SECONDS);
             return;
         }
