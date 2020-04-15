@@ -11,6 +11,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -121,7 +123,46 @@ public class Utils {
             c.save(f);
             File file = new File("tempmutes.yml");
             YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
-        } catch(IOException exc) {
+        } catch (IOException exc) {
+            exc.printStackTrace();
+        }
+    }
+
+    public static void tempMute(GuildMessageReceivedEvent e, Member m, String reason, String until, String TYPE) throws NullPointerException {
+        try {
+            switch (TYPE) {
+                case "GENERAL":
+                    e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Mute", true).get(0)).queue();
+                    break;
+                case "VOICE":
+                    e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Voicemute", true).get(0)).queue();
+                    break;
+                case "CHAT":
+                    e.getGuild().addRoleToMember(m, e.getGuild().getRolesByName("Chatmute", true).get(0)).queue();
+                    break;
+            }
+            File d = new File("users/" + m.getId() + "/");
+            File f = new File("users/" + m.getId() + "/mutes.yml");
+            if (!d.exists()) {
+                d.mkdirs();
+            }
+            if (!f.exists()) {
+                f.createNewFile();
+            }
+            YamlConfiguration c = YamlConfiguration.loadConfiguration(f);
+
+            c.set("muted", true);
+            c.set("reason", reason);
+            c.set("type", TYPE);
+            c.set("date", System.currentTimeMillis());
+            c.set("muter", e.getMember().getId());
+            c.set("permanent", false);
+            Date expireDate = parseDate(until, "dd.MM.yyyy-HH:mm:ss");
+            c.set("expireDate", expireDate.getTime());
+            c.save(f);
+            File file = new File("tempmutes.yml");
+            YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+        } catch (IOException exc) {
             exc.printStackTrace();
         }
     }
@@ -129,7 +170,7 @@ public class Utils {
     public static List<Warn> getWarns(Member m) {
         List<Warn> warns = new ArrayList<>();
         File f = new File("users/" + m.getId() + "/warns.yml");
-        if(f.exists()) {
+        if (f.exists()) {
             YamlConfiguration c = YamlConfiguration.loadConfiguration(f);
             List<String> reasons = c.getStringList("reasons");
             Guild guild = Bot.getBot().jda.getGuildsByName("Demokratie Testserver", true).get(0);
@@ -213,12 +254,20 @@ public class Utils {
         File f = new File("users/" + m.getId() + "/mutes.yml");
         YamlConfiguration c = YamlConfiguration.loadConfiguration(f);
         c.set("muted", false);
-        c.set("reason", "");
+        c.set("reason", null);
         c.set("expireDate", null);
         try {
             c.save(f);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public static Date parseDate(String date, String pattern) {
+        try {
+            return new SimpleDateFormat(pattern).parse(date);
+        } catch (ParseException e) {
+            return null;
         }
     }
 
