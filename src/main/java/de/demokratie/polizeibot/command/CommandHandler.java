@@ -55,11 +55,9 @@ public class CommandHandler extends ListenerAdapter {
 
     @Override
     public void onGuildMessageReceived(@Nonnull GuildMessageReceivedEvent event) {
-        if (!event.getMessage().getContentRaw().startsWith(Bot.COMMAND_PREFIX) && !event.getAuthor().isBot() && !event.isWebhookMessage())
+        if (!event.getMessage().getContentRaw().startsWith(Bot.COMMAND_PREFIX) || event.getAuthor().isBot() || event.isWebhookMessage())
             return;
-
-        if (!event.getAuthor().isBot() && !event.isWebhookMessage())
-            handle(event);
+        handle(event);
 
     }
 
