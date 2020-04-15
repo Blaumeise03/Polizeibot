@@ -64,6 +64,7 @@ public class WarnCommand implements Command {
                 reason).addField("", "**__Bisherige Verwarnungen__**\n" + warns);
 
         target.getUser().openPrivateChannel().complete().sendMessage(priv.build()).queue();
+        Utils.log(Color.YELLOW, member, target, "wurde verwarnt", "", "Verwarnung", reason);
 
     }
 }

@@ -63,5 +63,13 @@ public class MuteCommand implements Command {
         String reason = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
         Utils.mute(event, target, reason, args[1].toUpperCase());
 
+        target.getUser().openPrivateChannel().complete().sendMessage(
+                new EmbedCreator(Color.RED)
+                        .setDescription("Du wurdest permanent gemutet!")
+                        .addField("", "**__Grund:__**\n" + reason)
+                        .build()
+        ).queue();
+        Utils.log(Color.RED, member, target, "hat gegen Regeln verstoßen, führt zu permanentem Mute", target.getAsMention() + " wurde permanent gemutet", "Regelverstoß", reason);
+
     }
 }
