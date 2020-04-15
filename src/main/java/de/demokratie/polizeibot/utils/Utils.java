@@ -190,13 +190,13 @@ public class Utils {
         if (f.exists()) {
             YamlConfiguration c = YamlConfiguration.loadConfiguration(f);
             List<String> reasons = c.getStringList("reasons");
-            Guild guild = Bot.getBot().jda.getGuildsByName("Demokratie Testserver", true).get(0);
+            Guild guild = Bot.getBot().jda.getGuildsByName("Polizei testserver", true).get(0);
             reasons.stream().forEach((reason) -> {
                 Warn warn = new Warn();
                 long millis = c.getLong(reason + ".date");
                 warn.setDate(new Date(millis));
                 warn.setMember(m);
-                Member warner = guild.getMemberById(reason + ".warner");
+                Member warner = guild.getMemberById(c.getString(reason + ".warner"));
                 warn.setWarner(warner);
                 warn.setReason(reason);
                 warns.add(warn);
