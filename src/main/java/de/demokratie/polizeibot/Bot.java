@@ -39,7 +39,7 @@ public class Bot {
         String temp = token;
 
         while (token.equalsIgnoreCase(temp)) {
-            System.out.println("Waiting for entering the token...");
+            System.out.println("Waiting for entering the token in config.properties...");
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
