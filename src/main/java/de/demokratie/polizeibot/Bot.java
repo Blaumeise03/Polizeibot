@@ -36,9 +36,8 @@ public class Bot {
         }
 
         String token = config.getToken();
-        String temp = token;
 
-        while (token.equalsIgnoreCase(temp)) {
+        while (token.equalsIgnoreCase("token")) {
             System.out.println("Waiting for entering the token in config.properties...");
             try {
                 Thread.sleep(1000);
