@@ -56,8 +56,7 @@ public class Bot {
         commandHandler.addCommand(new HelpCommand(commandHandler));
 
         try {
-            jda = new JDABuilder(AccountType.BOT)
-                    .setToken(token)
+            jda = JDABuilder.createDefault(token)
                     .setAutoReconnect(true)
                     .addEventListeners(commandHandler)
                     .build().awaitReady();
