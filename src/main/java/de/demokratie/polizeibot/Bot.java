@@ -69,6 +69,7 @@ public class Bot {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
+                e.printStackTrace();
             }
 
             while (true) {
@@ -82,9 +83,9 @@ public class Bot {
 
                         Date expiration = mute.getExpireDate();
                         Date now = Date.from(Instant.now());
-
+                        //System.out.println("a" + expiration.getTime());
+                        //System.out.println("b" + now.getTime());
                         if (now.after(expiration)) {
-
                             guild.removeRoleFromMember(mute.getMember(), guild.getRolesByName("Mute", true).get(0)).queue();
                             guild.removeRoleFromMember(mute.getMember(), guild.getRolesByName("Voicemute", true).get(0)).queue();
                             guild.removeRoleFromMember(mute.getMember(), guild.getRolesByName("Chatmute", true).get(0)).queue();
@@ -96,6 +97,7 @@ public class Bot {
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         }).start();

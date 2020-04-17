@@ -3,6 +3,7 @@ package de.demokratie.polizeibot.commands;
 import de.demokratie.polizeibot.Bot;
 import de.demokratie.polizeibot.command.Command;
 import de.demokratie.polizeibot.embed.EmbedCreator;
+import de.demokratie.polizeibot.utils.MuteType;
 import de.demokratie.polizeibot.utils.Utils;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -12,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class TempMuteCommand implements Command {
@@ -69,7 +71,7 @@ public class TempMuteCommand implements Command {
         try {
             days = Integer.parseInt(args[2]);
         } catch (Exception ex) {
-            Date date = Utils.tempMute(event, target, reason, args[2], args[1].toUpperCase());
+            Date date = Utils.tempMute(event, target, reason, args[2], Objects.requireNonNull(MuteType.getType(args[1])));
             if (date != null) {
 
                 target.getUser().openPrivateChannel().complete().sendMessage(
@@ -92,7 +94,7 @@ public class TempMuteCommand implements Command {
             return;
         }
 
-        Date date = Utils.tempMute(event, target, reason, days, args[1].toUpperCase());
+        Date date = Utils.tempMute(event, target, reason, days, Objects.requireNonNull(MuteType.getType(args[1])));
 
         target.getUser().openPrivateChannel().complete().sendMessage(
                 new EmbedCreator(Color.RED)

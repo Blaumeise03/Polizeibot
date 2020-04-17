@@ -1,26 +1,32 @@
 package de.demokratie.polizeibot.objects;
 
+import de.demokratie.polizeibot.utils.MuteType;
 import net.dv8tion.jda.api.entities.Member;
+import org.yaml.snakeyaml.Yaml;
 
+import java.io.File;
+import java.io.InputStream;
+import java.rmi.UnexpectedException;
 import java.util.Date;
+import java.util.Map;
 
 public class Mute {
 
     private boolean muted;
 
     private String reason;
-    private String type;
+    private MuteType type;
     private Member m;
     private Member muter;
     private Date d;
     private Date expireDate;
     private boolean permanent;
 
-    public String getType() {
+    public MuteType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(MuteType type) {
         this.type = type;
     }
 

@@ -3,6 +3,7 @@ package de.demokratie.polizeibot.commands;
 import de.demokratie.polizeibot.Bot;
 import de.demokratie.polizeibot.command.Command;
 import de.demokratie.polizeibot.embed.EmbedCreator;
+import de.demokratie.polizeibot.utils.MuteType;
 import de.demokratie.polizeibot.utils.Utils;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -10,6 +11,7 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class MuteCommand implements Command {
@@ -61,7 +63,7 @@ public class MuteCommand implements Command {
             target = mentioned.get(0);
         }
         String reason = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
-        Utils.mute(event, target, reason, args[1].toUpperCase());
+        Utils.mute(event, target, reason, Objects.requireNonNull(MuteType.getType(args[1])));
 
         target.getUser().openPrivateChannel().complete().sendMessage(
                 new EmbedCreator(Color.RED)

@@ -18,13 +18,13 @@ public class JoinListener extends ListenerAdapter {
         Information info = Utils.getInformation(m);
         if(info.isMuted()) {
             switch(info.getMute().getType()) {
-                case "GENERAL":
+                case GENERAL:
                     guild.addRoleToMember(m, guild.getRolesByName("Mute", true).get(0)).queue();
                     break;
-                case "VOICE":
+                case VOICE:
                     guild.addRoleToMember(m, guild.getRolesByName("Voicemute", true).get(0)).queue();
                     break;
-                case "CHAT":
+                case CHAT:
                     guild.addRoleToMember(m, guild.getRolesByName("Chatmute", true).get(0)).queue();
                     break;
             }
